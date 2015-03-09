@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<title>管理平台</title>
+<title>PS后台</title>
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
 </head>
 

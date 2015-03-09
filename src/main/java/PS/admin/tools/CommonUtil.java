@@ -8,6 +8,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -284,5 +288,35 @@ public class CommonUtil {
 	public static String getCurtimeString(){
 		Date date = new Date(System.currentTimeMillis());
 		return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.LONG).format(date);
+	}
+	
+	@SuppressWarnings("finally")
+	public static PSDataInputStream getPSDataStream(String url) {
+		PSDataInputStream dis = null;
+		try {
+			DataInputStream in = null;
+			URL realUrl;
+			realUrl = new URL(url);
+			HttpURLConnection httpConnection = (HttpURLConnection) realUrl
+					.openConnection();
+			httpConnection.setRequestMethod("POST");
+			httpConnection.setDoOutput(true);
+
+			OutputStream os = httpConnection.getOutputStream();
+			System.err.println(httpConnection.getResponseCode());
+			os.write(new byte[2]);
+			os.flush();
+			os.close();
+			in = new DataInputStream(httpConnection.getInputStream());
+			dis = PSDataInputStream.create(in, -1, CommonUtil.decodeKey());
+			httpConnection.disconnect();
+			return dis;
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			return dis;
+		}
 	}
 }

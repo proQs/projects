@@ -1,8 +1,10 @@
 package PS.admin.controller;
 
+import static PS.admin.common.LoginInfo.DUPLICATE_ACCOUNT;
 import static PS.admin.common.LoginInfo.ERROR_PSW;
 import static PS.admin.common.LoginInfo.NO_ADMINISTRATOR;
 import PS.admin.model.ServerInfo;
+import PS.admin.model.UserInfo;
 import PS.admin.service.LoginService;
 import PS.admin.validator.LoginValidator;
 
@@ -10,6 +12,7 @@ import com.jfinal.aop.Before;
 
 public class LoginController extends BaseController{
 
+	@Override
 	public void index() {
 		render("login.jsp");
 	}
@@ -32,9 +35,13 @@ public class LoginController extends BaseController{
 			keepPara("username", "userpassworld");
 			render("/index/login.jsp");
 			return;
+		} else if (result == DUPLICATE_ACCOUNT.number()) {
+			setAttr("lgMsg", "账号重复!");
+			keepPara("username", "userpassworld");
+			render("/index/login.jsp");
+			return;
 		}
-		keepPara("username");
-		setAttr("permissions", "1");
+		setAttr("user",UserInfo.getUsers().get(username));
 		setAttr("serverList", ServerInfo.getServerInfoList());
 		render("/base/basePage.jsp");
 	}
@@ -45,4 +52,7 @@ public class LoginController extends BaseController{
 	public void logout() {
 		redirect("/index/login.jsp");
 	}
+
+	@Override
+	protected void templateMethod(Integer serverId) {}
 }

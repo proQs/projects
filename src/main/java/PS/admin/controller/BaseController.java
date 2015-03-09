@@ -3,6 +3,9 @@ package PS.admin.controller;
 import java.util.List;
 import java.util.Map;
 
+import PS.admin.model.ServerInfo;
+import PS.admin.model.UserInfo;
+
 import com.jfinal.core.Controller;
 
 public abstract class BaseController extends Controller{
@@ -66,4 +69,19 @@ public abstract class BaseController extends Controller{
 //			splitPage.setOrderMode(mode);
 //		}
 	}
+	
+	public void index() {
+		String username = getPara("username");
+		Integer serverId = getParaToInt("serverId");
+		if (serverId == null) {
+			serverId = -1;
+		}
+		templateMethod(serverId);
+		keepPara("serverId");
+		setAttr("user", UserInfo.getUsers().get(username));
+		setAttr("serverList", ServerInfo.getServerInfoList());
+		render("/base/basePage.jsp");
+	}
+
+	protected abstract void templateMethod(Integer serverId);
 }

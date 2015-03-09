@@ -1,6 +1,5 @@
 package PS.admin.model;
 
-import com.jfinal.plugin.activerecord.Model;
 
 /**
  * Administrator model.
@@ -16,6 +15,6 @@ mysql> desc adminaccount;
 +---------+--------------+------+-----+---------+----------------+
  */
 @SuppressWarnings("serial")
-public class Adminaccount extends Model<Adminaccount> {
+public class Adminaccount extends BaseModel<Adminaccount> {
 	public static final Adminaccount me = new Adminaccount();
 }
