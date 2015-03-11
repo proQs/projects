@@ -82,8 +82,8 @@ public class ViewRetentionService extends BaseService {
 
 	private HashMap<Long, Long> getCreateUsers(Date start, String dbName) {
 		String name = CommonUtil.getLogTable(start);
-		String sql = "select uid,log_time from " + name + " where type = " + Config.Log_Login;
-//		String sql = "select uid,log_time from " + name + " where type = " + Config.Log_CreateUser;
+//		String sql = "select uid,log_time from " + name + " where type = " + Config.Log_Login;
+		String sql = "select uid,log_time from " + name + " where type = " + Config.Log_CreateUser;
 		log.info(sql);
 		List<Record> re = Db.use(dbName).find(sql);
 		HashMap<Long, Long> map = new HashMap<Long, Long>();

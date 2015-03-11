@@ -4,6 +4,7 @@ import PS.admin.controller.LoginController;
 import PS.admin.controller.SelectServerController;
 import PS.admin.controller.ViewRetentionController;
 import PS.admin.controller.retentionController;
+import PS.admin.interceptor.AuthenticationInterceptor;
 import PS.admin.model.Adminaccount;
 
 import com.jfinal.config.Constants;
@@ -57,7 +58,7 @@ public class PSAdminConfig extends JFinalConfig {
 	 * 配置全局拦截器
 	 */
 	public void configInterceptor(Interceptors me) {
-		
+		me.add(new AuthenticationInterceptor());
 	}
 	
 	/**

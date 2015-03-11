@@ -304,11 +304,12 @@ public class CommonUtil {
 	@SuppressWarnings("finally")
 	public static PSDataInputStream getPSDataStream(String url) {
 		PSDataInputStream dis = null;
+		HttpURLConnection httpConnection = null;
 		try {
 			DataInputStream in = null;
 			URL realUrl;
 			realUrl = new URL(url);
-			HttpURLConnection httpConnection = (HttpURLConnection) realUrl
+			httpConnection = (HttpURLConnection) realUrl
 					.openConnection();
 			httpConnection.setRequestMethod("POST");
 			httpConnection.setDoOutput(true);
@@ -327,6 +328,7 @@ public class CommonUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
+			httpConnection.disconnect();
 			return dis;
 		}
 	}
