@@ -333,20 +333,35 @@ public class CommonUtil {
 
 	private static Logger log = Logger.getLogger(CommonUtil.class);
 	
-	public static void connectLogDB(Integer serverId) {
-		ServerInfo sif = ServerInfo.getServerInfo(serverId);
-		if (DbKit.getConfig(sif.getName()) != null) {
+	public static void connectLogDB(String logdb, Integer serverId) {
+		if (DbKit.getConfig(logdb) != null) {
 			return;
 		}
 		ServerDBInfo sdb = ServerInfo.getServerDBInfo().get(serverId);
-		String url = "jdbc:mysql://" + sdb.getLogAddress();
-		C3p0Plugin cp = new C3p0Plugin(url, sdb.getLogUser(), sdb.getLogPassWord());
+		String logURL = "jdbc:mysql://" + sdb.getLogAddress();
+		C3p0Plugin cp = new C3p0Plugin(logURL, sdb.getLogUser(), sdb.getLogPassWord());
 		cp.start();
-		ActiveRecordPlugin arp = new ActiveRecordPlugin(sif.getName(), cp);
+		ActiveRecordPlugin arp = new ActiveRecordPlugin(logdb, cp);
 		arp.setDialect(new MysqlDialect());
 		arp.start();
-		log.info("连接--"+serverId+"区"+sif.getName()+"--成功");
-		log.info("url="+ url);
+		log.info("连接--"+logdb+"--成功");
+		log.info("url="+ logURL);
+	}
+	
+	public static void connectGameDB(String gamedb, Integer serverId) {
+		if (DbKit.getConfig(gamedb) != null) {
+			return;
+		}
+		ServerDBInfo sdb = ServerInfo.getServerDBInfo().get(serverId);
+		String gameURL = "jdbc:mysql://" + sdb.getDbAddress();
+		log.info(gameURL);
+		C3p0Plugin cp = new C3p0Plugin(gameURL, sdb.getDbUser(), sdb.getDbPassWord());
+		cp.start();
+		ActiveRecordPlugin arp = new ActiveRecordPlugin(gamedb, cp);
+		arp.setDialect(new MysqlDialect());
+		arp.start();
+		log.info("连接--"+gamedb+"--成功");
+		log.info("url="+ gameURL);
 	}
 	
 	public static String getLogTable(Date date) {

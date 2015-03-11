@@ -1,5 +1,8 @@
 package PS.admin.controller;
 
+import java.util.List;
+
+import PS.admin.model.retentionInfo;
 import PS.admin.service.ViewRetentionService;
 
 public class ViewRetentionController extends BaseFunctionController{
@@ -11,9 +14,10 @@ public class ViewRetentionController extends BaseFunctionController{
 	@Override
 	protected void templateFunctionMethod(Integer serverId) {
 		String startDate = getPara("startDate");
-	    String endDate = getPara("endDate");
-	    ViewRetentionService.service.viewRetention(startDate, endDate, serverId);
+	    List<retentionInfo> rif = ViewRetentionService.service.viewRetention(startDate, serverId);
+	    setAttr("startDatere", startDate);
 		setAttr("viewRetention", true);
+		setAttr("retentionlist", rif);
 	}
 
 }

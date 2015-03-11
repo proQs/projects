@@ -32,8 +32,8 @@ public class SelectSvService extends BaseService {
 			String dbUser = dis.readUTF();
 			String dbPassWord = dis.readUTF();
 			ServerDBInfo db = new ServerDBInfo(logAddress, logUser, logPassWord, dbAddress, dbUser, dbPassWord);
+			log.info(logAddress + "-----------" + dbAddress);
 			ServerInfo.addServerDBInfo(serverId, db);
-			System.out.println(dbAddress);
 		}  catch (IOException e) {
 			e.printStackTrace();
 		}

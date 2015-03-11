@@ -2,17 +2,38 @@ package PS.admin.model;
 
 public class retentionInfo {
 
-	public final String startDate;
-	public final int retentionType;
-	public final int createMembers;
-	public final int retentionMembers;
-	public final float Prob;
+	private final String startDate;
+	private final String retentionType;
+	private final int createMembers;
+	private final int retentionMembers;
+	private final float prob;
 	
-	public retentionInfo(String startDate, int retentionType, int totalMembers, int retentionMembers, float Prob) {
+	public retentionInfo(String startDate, String retentionType, int totalMembers, int retentionMembers, float prob) {
 		this.startDate = startDate;
 		this.retentionType = retentionType;
 		this.createMembers = totalMembers;
 		this.retentionMembers = retentionMembers;
-		this.Prob = Prob;
+		this.prob = prob;
 	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public String getRetentionType() {
+		return retentionType;
+	}
+
+	public int getCreateMembers() {
+		return createMembers;
+	}
+
+	public int getRetentionMembers() {
+		return retentionMembers;
+	}
+
+	public float getProb() {
+		return prob;
+	}
+
 }

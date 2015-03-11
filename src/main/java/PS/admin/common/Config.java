@@ -12,7 +12,8 @@ public class Config {
 	public static String key1 = "IUUhp5789iIUP0APUg2H98gf23viusab";
 	
 	public final static int ONE_DAY = 60 * 60 * 24;
-	public final static int TWO_DAY = 60 * 60 * 24 * 2;
+	public final static int THREE_DAY = ONE_DAY * 3;
+	public final static int SEVEN_DAY = ONE_DAY * 7;
 
 	// System 0 ~ 9999
 	public static final int Log_StartServer = 0;

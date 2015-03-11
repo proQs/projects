@@ -49,4 +49,12 @@ public class ServerInfo {
 	public static ConcurrentHashMap<Integer, ServerDBInfo> getServerDBInfo() {
 		return  serverDBInfo;
 	}
+	
+	public String getLogDBName() {
+		return id + "_logdb";
+	}
+	
+	public String getGameDBName() {
+		return id + "_gamedb";
+	}
 }

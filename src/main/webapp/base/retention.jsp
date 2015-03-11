@@ -40,9 +40,9 @@
 		<table id="rounded-corner" summary="查看留存率">
 			<thead>
 				<tr>
-					<th scope="col" class="rounded-company">起始时间</th>
+					<th scope="col" class="rounded-company">查询时间</th>
 					<th scope="col" class="rounded-q4" colspan="3">
-						<input type="text" name="startDate" class="ui_timepicker"></th>
+						<input type="text" name="startDate" class="ui_timepicker" value="${startDatere}"></th>
 				</tr>
 			</thead>
 			<tfoot>
@@ -53,10 +53,6 @@
 				</tr>
 			</tfoot>
 			<tbody>
-				<tr>
-					<td>结束时间</td>
-					<td colspan="3"><input type="text" name="endDate" class="ui_timepicker"></td>
-				</tr>
 			</tbody>
 		</table>
 		<c:if test="${viewRetention != null}"> 
@@ -71,20 +67,24 @@
 			        </tr>
 			    </thead>
 			    <tbody>
-			    	<tr>
-			        	<td>Microsoft</td>
-			            <td>20.3</td>
-			            <td>20.3</td>
-			            <td>20.3</td>
-			            <td>30.5</td>
-			        </tr>
-			        <tr>
-			        	<td>Google</td>
-			            <td>50.2</td>
-			            <td>50.2</td>
-			            <td>50.2</td>
-			            <td>40.63</td>
-			        </tr>
+			    	<c:if test="${retentionlist == null}">
+			    		<tr>
+				        	<td>--</td>
+				        	<td>--</td>
+				        	<td>--</td>
+				        	<td>--</td>
+				        	<td>--</td>
+				        </tr>
+			    	</c:if> 
+			   		<c:forEach items="${retentionlist}" var="rlist">
+				    	<tr>
+				        	<td>${rlist.startDate}</td>
+				        	<td>${rlist.retentionType}</td>
+				        	<td>${rlist.createMembers}</td>
+				        	<td>${rlist.retentionMembers}</td>
+				        	<td>${rlist.prob * 100}%</td>
+				        </tr>
+					</c:forEach>
 			    </tbody>
 			</table>
 		</c:if> 
