@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
@@ -20,7 +21,17 @@ import java.util.Vector;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import sun.misc.BASE64Decoder;
+import PS.admin.common.Config;
+import PS.admin.model.ServerDBInfo;
+import PS.admin.model.ServerInfo;
+
+import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.jfinal.plugin.activerecord.DbKit;
+import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
+import com.jfinal.plugin.c3p0.C3p0Plugin;
 
 
 
@@ -318,5 +329,32 @@ public class CommonUtil {
 		} finally {
 			return dis;
 		}
+	}
+
+	private static Logger log = Logger.getLogger(CommonUtil.class);
+	
+	public static void connectLogDB(Integer serverId) {
+		ServerInfo sif = ServerInfo.getServerInfo(serverId);
+		if (DbKit.getConfig(sif.getName()) != null) {
+			return;
+		}
+		ServerDBInfo sdb = ServerInfo.getServerDBInfo().get(serverId);
+		String url = "jdbc:mysql://" + sdb.getLogAddress();
+		C3p0Plugin cp = new C3p0Plugin(url, sdb.getLogUser(), sdb.getLogPassWord());
+		cp.start();
+		ActiveRecordPlugin arp = new ActiveRecordPlugin(sif.getName(), cp);
+		arp.setDialect(new MysqlDialect());
+		arp.start();
+		log.info("连接--"+serverId+"区"+sif.getName()+"--成功");
+		log.info("url="+ url);
+	}
+	
+	public static String getLogTable(Date date) {
+		Calendar toCalendar = Calendar.getInstance();
+		toCalendar.setTime(date);
+		String table_name = String.format("%s_%d_%d_%d", "Table_GameLog", 
+					toCalendar.get(Calendar.YEAR), toCalendar.get(Calendar.MONTH) + 1, toCalendar.get(Calendar.DAY_OF_MONTH));
+		log.info("table_name = " + table_name);
+		return table_name;
 	}
 }

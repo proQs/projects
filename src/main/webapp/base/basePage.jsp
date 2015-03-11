@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -7,7 +6,6 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>无标题文档</title>
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
-<script src="../js/jquery-1.4.4.min.js" type="text/javascript" ></script>
 <script src="../js/myScript.js" type="text/javascript" ></script>
 </head>
 
@@ -32,7 +30,7 @@
 			<div class="left01_right"></div>
 			<div class="left01_left"></div>
 			<div class="left01_c">
-			选择服务器：<select name="ballName" id="ballName" onchange='mbar(this, "${user.name}")'> 
+			选择服务器：<select name="ballName" id="ballName" onchange='mbar(this);'> 
 						<option value="-1">请选择</option>
 						<c:forEach items="${serverList}" var="list">
 							<option value="${list.id}" ${serverId == list.id ?"selected= 'selected'" : ""}>${list.name}</option>
@@ -48,7 +46,7 @@
 			</div>
 			<div class="left02down">
 				<div class="left02down01">
-					<a onclick="show_menuB(80)" href="javascript:document.retention.submit();">
+					<a onclick="show_menuB(80)" href="javascript:document.getElementById('retention').submit();">
 					<div id="Bf080" class="left02down01_img"></div>用户留存率</a>
 				</div>
 			</div>
@@ -56,7 +54,7 @@
 		<div class="left01">
 			<div class="left03_right"></div>
 			<div class="left01_left"></div>
-			<a href="javascript:document.logout.submit();"><div class="left03_c">安全退出</div></a>
+			<a href="javascript:document.getElementById('logout').submit();"><div class="left03_c">安全退出</div></a>
 		</div>
 	</div>
 	<div class="rrcc" id="RightBox">
@@ -66,8 +64,14 @@
 			<c:otherwise><%@ include file="/base/selectServer.jsp"%></c:otherwise>
 		</c:choose>
 	</div>
-	<form name="logout" action="/PSadminlogin/logout" method="post"></form>
-	<form name="retention" action="/PSadminlogin/retention?serverId=${serverId}&username=${user.name}&page=retention" method="post"></form>
-	<form id="selectSv" method="post"></form>
+	<form id="logout" action="/PSadminlogin/logout" method="post"></form>
+	<form id="retention" action="/PSadmin/retention" method="post">
+		<input type="hidden" name="serverId" value="${serverId}"/>
+		<input type="hidden" name="username" value="${user.name}"/>
+		<input type="hidden" name="page" value="retention"/>
+	</form>
+	<form id="selectSv" method="post">
+		<input type="hidden" name="username" value="${user.name}"/>
+	</form>
 </body>
 </html>

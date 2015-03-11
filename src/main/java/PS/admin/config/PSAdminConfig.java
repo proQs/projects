@@ -2,6 +2,7 @@ package PS.admin.config;
 
 import PS.admin.controller.LoginController;
 import PS.admin.controller.SelectServerController;
+import PS.admin.controller.ViewRetentionController;
 import PS.admin.controller.retentionController;
 import PS.admin.model.Adminaccount;
 
@@ -33,7 +34,8 @@ public class PSAdminConfig extends JFinalConfig {
 	public void configRoute(Routes me) {
 		me.add("/PSadminlogin", LoginController.class, "/index");
 		me.add("/PSselectSV", SelectServerController.class);
-		me.add("/PSadminlogin/retention", retentionController.class);
+		me.add("/PSadmin/retention", retentionController.class);
+		me.add("/PSadmin/viewretention", ViewRetentionController.class);
 	}
 	
 	/**

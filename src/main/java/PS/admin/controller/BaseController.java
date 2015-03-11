@@ -3,6 +3,8 @@ package PS.admin.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import PS.admin.model.ServerInfo;
 import PS.admin.model.UserInfo;
 
@@ -10,6 +12,8 @@ import com.jfinal.core.Controller;
 
 public abstract class BaseController extends Controller{
 
+	protected static Logger log = Logger.getLogger(BaseController.class);
+	
 	/**
 	 * 全局变量
 	 */
@@ -70,7 +74,7 @@ public abstract class BaseController extends Controller{
 //		}
 	}
 	
-	public void index() {
+	protected final void baseIndex() {
 		String username = getPara("username");
 		Integer serverId = getParaToInt("serverId");
 		if (serverId == null) {

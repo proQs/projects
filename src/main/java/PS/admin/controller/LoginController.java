@@ -12,7 +12,6 @@ import com.jfinal.aop.Before;
 
 public class LoginController extends BaseController{
 
-	@Override
 	public void index() {
 		render("login.jsp");
 	}

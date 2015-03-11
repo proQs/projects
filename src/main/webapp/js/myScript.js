@@ -50,11 +50,11 @@ var $ = function(id) {
 		}
 	}
 	
-	function mbar(sobj ,name) {
+	function mbar(sobj) {
 		
 		var docurl =sobj.options[sobj.selectedIndex].value;
 		if (docurl != "") {
-			 document.getElementById("selectSv").action="/PSselectSV"+"?serverId="+docurl+"&username=" + name;
+			 document.getElementById("selectSv").action="/PSselectSV"+"?serverId="+docurl;
 			 document.getElementById("selectSv").submit();
 		}
 	}
