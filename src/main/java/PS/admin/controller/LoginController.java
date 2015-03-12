@@ -49,7 +49,7 @@ public class LoginController extends BaseController{
 	 * 注销
 	 */
 	public void logout() {
-		redirect("/index/login.jsp");
+		render("login.jsp");
 	}
 
 	@Override
