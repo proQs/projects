@@ -12,17 +12,19 @@ public class SelectSvService extends BaseService {
 
 	public static final SelectSvService service = new SelectSvService();
 
-	public void getDBInfo(Integer serverId) {
+	public boolean getDBInfo(Integer serverId) {
 		Map<Integer, ServerDBInfo> sdb = ServerInfo.getServerDBInfo();
 		if (sdb.containsKey(serverId)) {
-			return;
+			return true;
 		}
 
 		ServerInfo serverInfo = ServerInfo.getServerInfo(serverId);
-		String url = "http://" + serverInfo.getAddress() + "/PSServer/GetIP.do";
+		String url = "http://" + serverInfo.getAddress() + "/GetIP.do";
+		log.info(url);
 		PSDataInputStream dis = CommonUtil.getPSDataStream(url);
 		if (dis == null) {
-			return;
+			log.info("dis = null");
+			return false;
 		}
 		try {
 			String logAddress = dis.readUTF();
@@ -34,8 +36,10 @@ public class SelectSvService extends BaseService {
 			ServerDBInfo db = new ServerDBInfo(logAddress, logUser, logPassWord, dbAddress, dbUser, dbPassWord);
 			log.info(logAddress + "-----------" + dbAddress);
 			ServerInfo.addServerDBInfo(serverId, db);
+			return true;
 		}  catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 

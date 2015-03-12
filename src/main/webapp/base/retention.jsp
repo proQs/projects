@@ -29,7 +29,7 @@
 
 	
 <div class="right" id="li010">
-	<form name="logout" action="/PSadmin/viewretention" method="post">
+	<form name="logout" action="${ctx_path}/PSadmin/viewretention" method="post">
 		<input type="hidden" name="serverId" value="${serverId}"/>
 		<input type="hidden" name="username" value="${user.name}"/>
 		<input type="hidden" name="page" value="retention"/>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<title>无标题文档</title>
+<title>PS后台管理</title>
 <link href="${ctx_path}/css/style.css" rel="stylesheet" type="text/css" />
 <script src="${ctx_path}/js/myScript.js" type="text/javascript" ></script>
 </head>

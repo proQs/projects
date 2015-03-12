@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -29,7 +30,6 @@ import PS.admin.model.ServerDBInfo;
 import PS.admin.model.ServerInfo;
 
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
-import com.jfinal.plugin.activerecord.DbKit;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
 
@@ -301,7 +301,6 @@ public class CommonUtil {
 		return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.LONG).format(date);
 	}
 	
-	@SuppressWarnings("finally")
 	public static PSDataInputStream getPSDataStream(String url) {
 		PSDataInputStream dis = null;
 		HttpURLConnection httpConnection = null;
@@ -309,8 +308,9 @@ public class CommonUtil {
 			DataInputStream in = null;
 			URL realUrl;
 			realUrl = new URL(url);
-			httpConnection = (HttpURLConnection) realUrl
-					.openConnection();
+			httpConnection = (HttpURLConnection) realUrl.openConnection();
+			httpConnection.setConnectTimeout(2000);
+			httpConnection.setReadTimeout(2000);
 			httpConnection.setRequestMethod("POST");
 			httpConnection.setDoOutput(true);
 
@@ -321,24 +321,22 @@ public class CommonUtil {
 			os.close();
 			in = new DataInputStream(httpConnection.getInputStream());
 			dis = PSDataInputStream.create(in, -1, CommonUtil.decodeKey());
-			httpConnection.disconnect();
 			return dis;
+		} catch (SocketTimeoutException e) {
+			log.info(url + "连接超时!");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
 			httpConnection.disconnect();
-			return dis;
 		}
+		return dis;
 	}
 
 	private static Logger log = Logger.getLogger(CommonUtil.class);
 	
 	public static void connectLogDB(String logdb, Integer serverId) {
-		if (DbKit.getConfig(logdb) != null) {
-			return;
-		}
 		ServerDBInfo sdb = ServerInfo.getServerDBInfo().get(serverId);
 		String logURL = "jdbc:mysql://" + sdb.getLogAddress();
 		C3p0Plugin cp = new C3p0Plugin(logURL, sdb.getLogUser(), sdb.getLogPassWord());
@@ -351,9 +349,6 @@ public class CommonUtil {
 	}
 	
 	public static void connectGameDB(String gamedb, Integer serverId) {
-		if (DbKit.getConfig(gamedb) != null) {
-			return;
-		}
 		ServerDBInfo sdb = ServerInfo.getServerDBInfo().get(serverId);
 		String gameURL = "jdbc:mysql://" + sdb.getDbAddress();
 		log.info(gameURL);
