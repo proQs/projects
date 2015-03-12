@@ -30,7 +30,7 @@
 			<div class="left01_right"></div>
 			<div class="left01_left"></div>
 			<div class="left01_c">
-			选择服务器：<select name="ballName" id="ballName" onchange='mbar(this);'> 
+			选择服务器：<select name="ballName" id="ballName" onchange="mbar(this,'${ctx_path}/PSselectSV');"> 
 						<option value="-1">请选择</option>
 						<c:forEach items="${serverList}" var="list">
 							<option value="${list.id}" ${serverId == list.id ?"selected= 'selected'" : ""}>${list.name}</option>
@@ -64,8 +64,8 @@
 			<c:otherwise><%@ include file="/base/selectServer.jsp"%></c:otherwise>
 		</c:choose>
 	</div>
-	<form id="logout" action="/PSadminlogin/logout" method="post"></form>
-	<form id="retention" action="/PSadmin/retention" method="post">
+	<form id="logout" action="${ctx_path}/PSadminlogin/logout" method="post"></form>
+	<form id="retention" action="${ctx_path}/PSadmin/retention" method="post">
 		<input type="hidden" name="serverId" value="${serverId}"/>
 		<input type="hidden" name="username" value="${user.name}"/>
 		<input type="hidden" name="page" value="retention"/>

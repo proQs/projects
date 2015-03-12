@@ -4,7 +4,8 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>PS后台</title>
-<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<base href="${ctx_path}/">
 </head>
 
 <body>
@@ -14,17 +15,17 @@
     <td bgcolor="#e5f6cf">&nbsp;</td>
   </tr>
   <tr>
-    <td height="608" background="../images/login_03.gif"><table width="862" border="0" align="center" cellpadding="0" cellspacing="0">
+    <td height="608" background="images/login_03.gif"><table width="862" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
-        <td height="266" background="../images/login_04.gif">&nbsp;</td>
+        <td height="266" background="images/login_04.gif">&nbsp;</td>
       </tr>
       <tr>
         <td height="95">
 	       	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	          <tr>
-	            <td width="424" height="95" background="../images/login_06.gif">&nbsp;</td>
-	            <td width="183" background="../images/login_07.gif">
-				<form name="login" action="/PSadminlogin/vali" method="post">
+	            <td width="424" height="95" background="images/login_06.gif">&nbsp;</td>
+	            <td width="183" background="images/login_07.gif">
+				<form name="login" action="${ctx_path}/PSadminlogin/vali" method="post">
 	            <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	              <tr>
 	                <td width="21%" height="30"><div align="center"><span class="STYLE3">用户</span></div></td>
@@ -36,17 +37,17 @@
 	              </tr>
 	              <tr>
 	                <td height="30">&nbsp;</td>
-	                <td height="30"><img src="../images/dl.gif" width="81" height="22" border="0" usemap="#Map"></td>
+	                <td height="30"><img src="images/dl.gif" width="81" height="22" border="0" usemap="#Map"></td>
 	              </tr>
 	            </table>
 	            </form></td>
-	            <td width="255" background="../images/login_08.gif">&nbsp;</td>
+	            <td width="255" background="images/login_08.gif">&nbsp;</td>
 	          </tr>
 	        </table>
         </td>
       </tr>
       <tr>
-        <td height="247" valign="top" background="../images/login_09.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <td height="247" valign="top" background="images/login_09.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="22%" height="30">&nbsp;</td>
             <td width="56%">&nbsp;</td>

@@ -4948,3 +4948,111 @@ java.lang.NullPointerException
 
 2015-03-11 18:31:22
 [ERROR]-[Thread: qtp1081270612-21]-[PS.admin.tools.ToolDateTime.parse()]: ToolDateTime.parse异常：date值，pattern值yyyy-MM-dd HH:mm:ss
+
+2015-03-12 14:00:03
+[INFO]-[Thread: main]-[com.mchange.v2.log.MLog.<clinit>()]: MLog clients using log4j logging.
+
+2015-03-12 14:00:03
+[INFO]-[Thread: main]-[com.mchange.v2.c3p0.C3P0Registry.banner()]: Initializing c3p0-0.9.1.2 [built 21-May-2007 15:04:56; debug? true; trace: 10]
+
+2015-03-12 14:00:04
+[INFO]-[Thread: main]-[com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource.getPoolManager()]: Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 2, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge35e983hjhtwnaxl1b|cb06677, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge35e983hjhtwnaxl1b|cb06677, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://127.0.0.1/login?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 20, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 100, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 10, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+
+2015-03-12 14:00:18
+[INFO]-[Thread: qtp1005782596-24]-[PS.admin.service.SelectSvService.getDBInfo()]: localhost:3306/pslog-----------localhost:3306/psworld
+
+2015-03-12 14:00:18
+[INFO]-[Thread: qtp1005782596-24]-[com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource.getPoolManager()]: Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 2, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge35e983hjhtwnaxl1b|6de45373, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge35e983hjhtwnaxl1b|6de45373, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://localhost:3306/pslog, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 20, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 100, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 10, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+
+2015-03-12 14:00:18
+[INFO]-[Thread: qtp1005782596-24]-[PS.admin.tools.CommonUtil.connectLogDB()]: 连接--6_logdb--成功
+
+2015-03-12 14:00:18
+[INFO]-[Thread: qtp1005782596-24]-[PS.admin.tools.CommonUtil.connectLogDB()]: url=jdbc:mysql://localhost:3306/pslog
+
+2015-03-12 14:00:18
+[INFO]-[Thread: qtp1005782596-24]-[PS.admin.tools.CommonUtil.connectGameDB()]: jdbc:mysql://localhost:3306/psworld
+
+2015-03-12 14:00:18
+[INFO]-[Thread: qtp1005782596-24]-[com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource.getPoolManager()]: Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 2, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge35e983hjhtwnaxl1b|70819b7, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge35e983hjhtwnaxl1b|70819b7, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://localhost:3306/psworld, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 20, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 100, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 10, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+
+2015-03-12 14:00:18
+[INFO]-[Thread: qtp1005782596-24]-[PS.admin.tools.CommonUtil.connectGameDB()]: 连接--6_gamedb--成功
+
+2015-03-12 14:00:18
+[INFO]-[Thread: qtp1005782596-24]-[PS.admin.tools.CommonUtil.connectGameDB()]: url=jdbc:mysql://localhost:3306/psworld
+
+2015-03-12 14:00:22
+[ERROR]-[Thread: qtp1005782596-21]-[PS.admin.tools.ToolDateTime.parse()]: ToolDateTime.parse异常：date值，pattern值yyyy-MM-dd HH:mm:ss
+
+2015-03-12 14:00:30
+[INFO]-[Thread: qtp1005782596-22]-[PS.admin.tools.CommonUtil.getLogTable()]: table_name = Table_GameLog_2015_3_6
+
+2015-03-12 14:00:30
+[INFO]-[Thread: qtp1005782596-22]-[PS.admin.service.ViewRetentionService.getCreateUsers()]: select uid,log_time from Table_GameLog_2015_3_6 where type = 10001
+
+2015-03-12 14:00:30
+[INFO]-[Thread: qtp1005782596-22]-[PS.admin.service.ViewRetentionService.getCreateUsers()]: 0
+
+2015-03-12 14:25:15
+[INFO]-[Thread: main]-[com.mchange.v2.log.MLog.<clinit>()]: MLog clients using log4j logging.
+
+2015-03-12 14:25:15
+[INFO]-[Thread: main]-[com.mchange.v2.c3p0.C3P0Registry.banner()]: Initializing c3p0-0.9.1.2 [built 21-May-2007 15:04:56; debug? true; trace: 10]
+
+2015-03-12 14:25:16
+[INFO]-[Thread: main]-[com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource.getPoolManager()]: Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 2, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge35e983ifwiz1hy3zvn|4d7bf874, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge35e983ifwiz1hy3zvn|4d7bf874, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://127.0.0.1/login?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 20, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 100, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 10, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+
+2015-03-12 14:25:33
+[INFO]-[Thread: qtp1005782596-22]-[PS.admin.service.SelectSvService.getDBInfo()]: localhost:3306/pslog-----------localhost:3306/psworld
+
+2015-03-12 14:25:33
+[INFO]-[Thread: qtp1005782596-22]-[com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource.getPoolManager()]: Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 2, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge35e983ifwiz1hy3zvn|2e8d8cb6, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge35e983ifwiz1hy3zvn|2e8d8cb6, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://localhost:3306/pslog, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 20, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 100, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 10, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+
+2015-03-12 14:25:33
+[INFO]-[Thread: qtp1005782596-22]-[PS.admin.tools.CommonUtil.connectLogDB()]: 连接--6_logdb--成功
+
+2015-03-12 14:25:33
+[INFO]-[Thread: qtp1005782596-22]-[PS.admin.tools.CommonUtil.connectLogDB()]: url=jdbc:mysql://localhost:3306/pslog
+
+2015-03-12 14:25:33
+[INFO]-[Thread: qtp1005782596-22]-[PS.admin.tools.CommonUtil.connectGameDB()]: jdbc:mysql://localhost:3306/psworld
+
+2015-03-12 14:25:33
+[INFO]-[Thread: qtp1005782596-22]-[com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource.getPoolManager()]: Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 2, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge35e983ifwiz1hy3zvn|58987c45, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge35e983ifwiz1hy3zvn|58987c45, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://localhost:3306/psworld, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 20, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 100, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 10, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]
+
+2015-03-12 14:25:33
+[INFO]-[Thread: qtp1005782596-22]-[PS.admin.tools.CommonUtil.connectGameDB()]: 连接--6_gamedb--成功
+
+2015-03-12 14:25:33
+[INFO]-[Thread: qtp1005782596-22]-[PS.admin.tools.CommonUtil.connectGameDB()]: url=jdbc:mysql://localhost:3306/psworld
+
+2015-03-12 14:25:38
+[ERROR]-[Thread: qtp1005782596-23]-[PS.admin.tools.ToolDateTime.parse()]: ToolDateTime.parse异常：date值，pattern值yyyy-MM-dd HH:mm:ss
+
+2015-03-12 14:25:46
+[INFO]-[Thread: qtp1005782596-21]-[PS.admin.tools.CommonUtil.getLogTable()]: table_name = Table_GameLog_2015_3_6
+
+2015-03-12 14:25:46
+[INFO]-[Thread: qtp1005782596-21]-[PS.admin.service.ViewRetentionService.getCreateUsers()]: select uid,log_time from Table_GameLog_2015_3_6 where type = 10001
+
+2015-03-12 14:25:46
+[INFO]-[Thread: qtp1005782596-21]-[PS.admin.service.ViewRetentionService.getCreateUsers()]: 0
+
+2015-03-12 14:25:50
+[ERROR]-[Thread: qtp1005782596-22]-[PS.admin.tools.ToolDateTime.parse()]: ToolDateTime.parse异常：date值，pattern值yyyy-MM-dd HH:mm:ss
+
+2015-03-12 14:28:16
+[ERROR]-[Thread: qtp1005782596-21]-[PS.admin.tools.ToolDateTime.parse()]: ToolDateTime.parse异常：date值，pattern值yyyy-MM-dd HH:mm:ss
+
+2015-03-12 14:31:11
+[ERROR]-[Thread: qtp1005782596-22]-[PS.admin.tools.ToolDateTime.parse()]: ToolDateTime.parse异常：date值，pattern值yyyy-MM-dd HH:mm:ss
+
+2015-03-12 14:33:29
+[INFO]-[Thread: main]-[com.mchange.v2.log.MLog.<clinit>()]: MLog clients using log4j logging.
+
+2015-03-12 14:33:29
+[INFO]-[Thread: main]-[com.mchange.v2.c3p0.C3P0Registry.banner()]: Initializing c3p0-0.9.1.2 [built 21-May-2007 15:04:56; debug? true; trace: 10]
+
+2015-03-12 14:33:29
+[INFO]-[Thread: main]-[com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource.getPoolManager()]: Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 2, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, dataSourceName -> 1hge35e983iqhgj9ak1ku|49179e34, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> com.mysql.jdbc.Driver, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> 1hge35e983iqhgj9ak1ku|49179e34, idleConnectionTestPeriod -> 0, initialPoolSize -> 10, jdbcUrl -> jdbc:mysql://127.0.0.1/login?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 20, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 100, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 10, numHelperThreads -> 3, numThreadsAwaitingCheckoutDefaultUser -> 0, preferredTestQuery -> null, properties -> {user=******, password=******}, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false ]

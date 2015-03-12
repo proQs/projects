@@ -8,7 +8,6 @@
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	
 	<style>
 		*{
 			margin:0;
@@ -72,7 +71,7 @@
 	<p class="not-found">Not<br/>Found</p>
 	<div class="clear"></div>
 	<div class="content">说明：${msg}!<br/>
-		<a href="javascript:history.go(-1);">后退</a> 或者 &nbsp;<a href="/PSadminlogin">转到登陆</a>
+		<a href="javascript:history.go(-1);">后退</a> 或者 &nbsp;<a href="${ctx_path}/PSadminlogin">转到登陆</a>
 	</div>
 </body>
 </html>
