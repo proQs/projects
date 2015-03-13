@@ -32,6 +32,7 @@ import PS.admin.model.ServerInfo;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 
 
@@ -327,7 +328,7 @@ public class CommonUtil {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.info(url + "服务器未启动!");
 		} finally {
 			httpConnection.disconnect();
 		}
@@ -339,26 +340,31 @@ public class CommonUtil {
 	public static void connectLogDB(String logdb, Integer serverId) {
 		ServerDBInfo sdb = ServerInfo.getServerDBInfo().get(serverId);
 		String logURL = "jdbc:mysql://" + sdb.getLogAddress();
+		log.info("url="+ logURL + "user=" + sdb.getLogUser() + "psw=" +sdb.getLogPassWord());
 		C3p0Plugin cp = new C3p0Plugin(logURL, sdb.getLogUser(), sdb.getLogPassWord());
 		cp.start();
+		ComboPooledDataSource ds = (ComboPooledDataSource)cp.getDataSource();
+		ds.setMaxIdleTime(60);
+		ds.setAcquireRetryAttempts(5);
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(logdb, cp);
 		arp.setDialect(new MysqlDialect());
 		arp.start();
 		log.info("连接--"+logdb+"--成功");
-		log.info("url="+ logURL);
 	}
 	
 	public static void connectGameDB(String gamedb, Integer serverId) {
 		ServerDBInfo sdb = ServerInfo.getServerDBInfo().get(serverId);
 		String gameURL = "jdbc:mysql://" + sdb.getDbAddress();
-		log.info(gameURL);
+		log.info("url="+ gameURL);
 		C3p0Plugin cp = new C3p0Plugin(gameURL, sdb.getDbUser(), sdb.getDbPassWord());
 		cp.start();
+		ComboPooledDataSource ds = (ComboPooledDataSource)cp.getDataSource();
+		ds.setMaxIdleTime(60);
+		ds.setAcquireRetryAttempts(5);
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(gamedb, cp);
 		arp.setDialect(new MysqlDialect());
 		arp.start();
 		log.info("连接--"+gamedb+"--成功");
-		log.info("url="+ gameURL);
 	}
 	
 	public static String getLogTable(Date date) {

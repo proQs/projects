@@ -2,5 +2,5 @@
 	pageEncoding="utf-8"%>
 
 <div class="right" id="li010">
-	<font style="margin-left: 10%" color="red" size="6px">${serslmsg}</font>
+	<font style="margin-left: 10%" color="red" size="5px">${serslmsg}</font>
 </div>

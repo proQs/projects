@@ -14,10 +14,13 @@ public abstract class BaseFunctionController extends BaseController{
 			setAttr("serslmsg", "服务器不存在或未启动!");
 			return;
 		}
-		templateFunctionMethod(serverId);
+		if (!templateFunctionMethod(serverId)) {
+			setAttr("serslmsg", "连接数据库失败,请确认操作!");
+			return;
+		}
 		String page = getPara("page");
 		setAttr("page", page);
 	}
 
-	protected abstract void templateFunctionMethod(Integer serverId);
+	protected abstract boolean templateFunctionMethod(Integer serverId);
 }
