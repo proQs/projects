@@ -35,32 +35,33 @@ public class ViewRetentionService extends BaseService {
 		int threeDay_retentionNum = 0;
 		int sevenDay_retentionNum = 0;
 		for (int i = 0; i < allCreateNum; i++) {
-			log.debug("lastLogin[i]" + lastLogin[i]);
-			log.debug("createLogin[i]" + createLogin[i]);
 			long days = lastLogin[i] - createLogin[i];
-			if (days > Config.ONE_DAY) {
-				oneDay_retentionNum ++;
-			} else if (days > Config.THREE_DAY) {
-				oneDay_retentionNum ++;
-				threeDay_retentionNum ++;
-			} else if (days > Config.SEVEN_DAY) {
+			if (days > Config.SEVEN_DAY) {
 				oneDay_retentionNum ++;
 				threeDay_retentionNum ++;
 				sevenDay_retentionNum ++;
+			} else if (days > Config.THREE_DAY) {
+				oneDay_retentionNum ++;
+				threeDay_retentionNum ++;
+			} else if (days > Config.ONE_DAY) {
+				oneDay_retentionNum ++;
 			}
 		}
+		log.debug("oneDay_retentionNum = " + oneDay_retentionNum);
+		log.debug("threeDay_retentionNum = " + threeDay_retentionNum);
+		log.debug("sevenDay_retentionNum = " + sevenDay_retentionNum);
 		List<retentionInfo> rif = new ArrayList<retentionInfo>();
 		if (oneDay_retentionNum > 0) {
 			rif.add(new retentionInfo(startDate, RetentionType.ONEDAY.type(), allCreateNum, oneDay_retentionNum,
-					new BigDecimal(oneDay_retentionNum).divide(new BigDecimal(allCreateNum), 4, RoundingMode.HALF_UP).floatValue()));
+					(int) (new BigDecimal(oneDay_retentionNum).divide(new BigDecimal(allCreateNum), 4, RoundingMode.HALF_UP).floatValue() * 10000)));
 		}
 		if (threeDay_retentionNum > 0) {
 			rif.add(new retentionInfo(startDate, RetentionType.THREEDAY.type(), allCreateNum, threeDay_retentionNum,
-					new BigDecimal(threeDay_retentionNum).divide(new BigDecimal(allCreateNum), 4, RoundingMode.HALF_UP).floatValue()));
+					(int) (new BigDecimal(threeDay_retentionNum).divide(new BigDecimal(allCreateNum), 4, RoundingMode.HALF_UP).floatValue() * 10000)));
 		}
 		if (sevenDay_retentionNum > 0) {
 			rif.add(new retentionInfo(startDate, RetentionType.SEVEBDAY.type(), allCreateNum, sevenDay_retentionNum,
-					new BigDecimal(sevenDay_retentionNum).divide(new BigDecimal(allCreateNum), 4, RoundingMode.HALF_UP).floatValue()));
+					(int) (new BigDecimal(sevenDay_retentionNum).divide(new BigDecimal(allCreateNum), 4, RoundingMode.HALF_UP).floatValue() * 10000)));
 		}
 		if (rif.size() == 0) {
 			return null;

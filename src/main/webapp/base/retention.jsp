@@ -1,22 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<link type="text/css" href="../css/jquery-ui-1.8.17.custom.css"
+<base href="${ctx_path}/">
+<link type="text/css" href="css/jquery-ui-1.8.17.custom.css"
 	rel="stylesheet" />
-<link type="text/css" href="../css/jquery-ui-timepicker-addon.css"
+<link type="text/css" href="css/jquery-ui-timepicker-addon.css"
 	rel="stylesheet" />
-<link type="text/css" href="../css/myStyle.css"
+<link type="text/css" href="css/myStyle.css"
 	rel="stylesheet" />
-<script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript"
-	src="../js/jquery-ui-1.8.17.custom.min.js"></script>
-<script type="text/javascript" src="../js/jquery-ui-timepicker-addon.js"></script>
-<script type="text/javascript" src="../js/jquery-ui-timepicker-zh-CN.js"></script>
+	src="${ctx_path}/js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="${ctx_path}/js/jquery-ui-timepicker-zh-CN.js"></script>
 <script type="text/javascript">
     $(function () {
         $(".ui_timepicker").datetimepicker({
             showOn: "button",
-            buttonImage: "../css/images/icon_calendar.gif",
+            buttonImage: "css/images/icon_calendar.gif",
             buttonImageOnly: true,
             showSecond: true,
             timeFormat: 'hh:mm:ss',
@@ -35,7 +35,7 @@
 		<input type="hidden" name="page" value="retention"/>
 		
 		<div class="right01">
-			<img src="../images/04.gif" /> 统计 &gt; <span>用户留存率</span>
+			<img src="${ctx_path}/images/04.gif" /> 统计 &gt; <span>用户留存率</span>
 		</div>
 		<table id="rounded-corner" summary="查看留存率">
 			<thead>
@@ -82,7 +82,7 @@
 				        	<td>${rlist.retentionType}</td>
 				        	<td>${rlist.createMembers}</td>
 				        	<td>${rlist.retentionMembers}</td>
-				        	<td>${rlist.prob * 100}%</td>
+				        	<td>${rlist.prob / 100}%</td>
 				        </tr>
 					</c:forEach>
 			    </tbody>

@@ -4,8 +4,8 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>PS后台</title>
-<link href="css/style.css" rel="stylesheet" type="text/css" />
 <base href="${ctx_path}/">
+<link href="css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -72,7 +72,7 @@
   </tr>
 </table>
 
-<map name="Map"><area shape="rect" coords="3,3,36,19" href="javascript:document.login.submit();"><area shape="rect" coords="40,3,78,18" href="#"></map>
+<map name="Map"><area shape="rect" coords="3,3,36,19" href="javascript:document.login.submit();"><area shape="rect" coords="40,3,78,18" href="javascript:;"></map>
 </body>
 
 </html>

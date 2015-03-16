@@ -5,14 +5,14 @@ import java.util.Map;
 
 import PS.admin.common.LoginInfo;
 import PS.admin.model.Adminaccount;
+import PS.admin.model.ServerInfo;
 import PS.admin.model.UserInfo;
+import PS.admin.tools.CommonUtil;
 
 public class LoginService extends BaseService{
 
 	public static final LoginService service = new LoginService();
 	
-	private LoginService() {}
-
 	public int login(String username, String password) {
 		List<Adminaccount> ad = null;
 		Map<String, UserInfo> users = UserInfo.getUsers();
@@ -35,6 +35,19 @@ public class LoginService extends BaseService{
 			return LoginInfo.OK_LOGIN.number();
 		}
 		return LoginInfo.ERROR_PSW.number();
+	}
+
+	public void getServerInfo() {
+		List<ServerInfo> ls = ServerInfo.getServerInfoList();
+		if (ls.size() != 0) {
+			return;
+		}
+		synchronized (service) {
+			if (ls.size() != 0) {
+				return;
+			}
+			CommonUtil.getServerInfo(this.getClass().getClassLoader());
+		}
 	}
 	
 	

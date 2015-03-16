@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.Vector;
 
 import javax.servlet.ServletInputStream;
@@ -374,5 +375,28 @@ public class CommonUtil {
 					toCalendar.get(Calendar.YEAR), toCalendar.get(Calendar.MONTH) + 1, toCalendar.get(Calendar.DAY_OF_MONTH));
 		log.info("table_name = " + table_name);
 		return table_name;
+	}
+	
+	public static void getServerInfo(ClassLoader classLoader) {
+		try {
+			InputStream proIn = classLoader.getResourceAsStream("/serverList.properties");
+			Properties pro = new Properties();
+			pro.load(proIn);
+			String url = pro.getProperty("url_serverList") + "/GetIP.do";
+			PSDataInputStream dis = CommonUtil.getPSDataStream(url);
+			if (dis == null) {
+				return;
+			}
+			int length = dis.readShort();
+			for (int i = 0; i < length; i++) {
+				int id = dis.read();
+				String name = dis.readUTF();
+				byte state = dis.readByte();
+				String address = dis.readUTF();
+				ServerInfo.addServer(new ServerInfo(id, name, state, address));
+			}
+		}  catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

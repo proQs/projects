@@ -3,6 +3,9 @@ package PS.admin.controller;
 import static PS.admin.common.LoginInfo.DUPLICATE_ACCOUNT;
 import static PS.admin.common.LoginInfo.ERROR_PSW;
 import static PS.admin.common.LoginInfo.NO_ADMINISTRATOR;
+
+import java.util.List;
+
 import PS.admin.model.ServerInfo;
 import PS.admin.model.UserInfo;
 import PS.admin.service.LoginService;
@@ -41,7 +44,12 @@ public class LoginController extends BaseController{
 			return;
 		}
 		setAttr("user",UserInfo.getUsers().get(username));
-		setAttr("serverList", ServerInfo.getServerInfoList());
+		LoginService.service.getServerInfo();
+		List<ServerInfo> ls = ServerInfo.getServerInfoList();
+		if (ls.size() == 0) {
+			setAttr("serslmsg", "获取服务器列表服务未启动,请启动后重新登录!");
+		}
+		setAttr("serverList", ls);
 		render("/base/basePage.jsp");
 	}
 

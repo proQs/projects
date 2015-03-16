@@ -6,9 +6,9 @@ public class retentionInfo {
 	private final String retentionType;
 	private final int createMembers;
 	private final int retentionMembers;
-	private final float prob;
+	private final int prob;
 	
-	public retentionInfo(String startDate, String retentionType, int totalMembers, int retentionMembers, float prob) {
+	public retentionInfo(String startDate, String retentionType, int totalMembers, int retentionMembers, int prob) {
 		this.startDate = startDate;
 		this.retentionType = retentionType;
 		this.createMembers = totalMembers;
