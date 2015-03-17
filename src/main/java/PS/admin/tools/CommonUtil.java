@@ -17,8 +17,14 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -398,5 +404,36 @@ public class CommonUtil {
 		}  catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static <T> List<T> callSingleThread(Callable<List<T>> task) {
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		Future<List<T>> future = executor.submit(task);
+		List<T> ls = null;
+		try {
+			ls = future.get(5000, TimeUnit.MILLISECONDS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("futureException", e);
+			future.cancel(true);
+			executor.shutdownNow();
+			return null;
+		}
+		return ls;
+	}
+	
+	public static boolean runSingleThread(Runnable task) {
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		Future<?> future = executor.submit(task);
+		try {
+			future.get(10000, TimeUnit.MILLISECONDS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("futureException", e);
+			future.cancel(true);
+			executor.shutdownNow();
+			return false;
+		}
+		return true;
 	}
 }

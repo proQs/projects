@@ -4,6 +4,8 @@ import PS.admin.controller.LoginController;
 import PS.admin.controller.SelectServerController;
 import PS.admin.controller.ViewRetentionController;
 import PS.admin.controller.retentionController;
+import PS.admin.controller.singleLogController;
+import PS.admin.controller.viewSingleLogController;
 import PS.admin.interceptor.AuthenticationInterceptor;
 import PS.admin.model.Adminaccount;
 
@@ -38,6 +40,8 @@ public class PSAdminConfig extends JFinalConfig {
 		me.add("/PSselectSV", SelectServerController.class);
 		me.add("/PSadmin/retention", retentionController.class);
 		me.add("/PSadmin/viewretention", ViewRetentionController.class);
+		me.add("/PSadmin/singlelog", singleLogController.class);
+		me.add("/PSadmin/viewsinglelog", viewSingleLogController.class);
 	}
 	
 	/**

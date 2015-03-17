@@ -1,10 +1,10 @@
 package PS.admin.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import PS.admin.common.SplitPage;
 import PS.admin.model.ServerInfo;
 import PS.admin.model.UserInfo;
 
@@ -17,34 +17,17 @@ public abstract class BaseController extends Controller{
 	/**
 	 * 全局变量
 	 */
-	protected String ids;			// 主键
-//	protected SplitPage splitPage;	// 分页封装
-	protected List<?> list;			// 公共list
+	protected SplitPage splitPage;	// 分页封装
 	
-	/**
-	 * 请求/WEB-INF/下的视图文件
-	 */
-	public void toUrl() {
-		String toUrl = getPara("toUrl");
-		render(toUrl);
+	protected SplitPage getSplitPage() {
+		synchronized (log) {
+			if (splitPage == null) {
+				splitPage = new SplitPage();
+			}
+		}
+		return splitPage;
 	}
 	
-	/**
-	 * 获取当前用户id
-	 * @return
-	 */
-	protected String getCUserIds(){
-		return getAttr("cUserIds");
-	}
-
-	/**
-	 * 获取当前用户
-	 * @return
-	 */
-	protected String getCUser(){
-		return getAttr("cUser");
-	}
-
 	/**
 	 * 获取ParamMap
 	 * @return
@@ -68,10 +51,10 @@ public abstract class BaseController extends Controller{
 	 * @param mode
 	 */
 	protected void defaultOrder(String colunm, String mode){
-//		if(null == splitPage.getOrderColunm() || splitPage.getOrderColunm().isEmpty()){
-//			splitPage.setOrderColunm(colunm);
-//			splitPage.setOrderMode(mode);
-//		}
+		if(null == splitPage.getOrderColunm() || splitPage.getOrderColunm().isEmpty()){
+			splitPage.setOrderColunm(colunm);
+			splitPage.setOrderMode(mode);
+		}
 	}
 	
 	protected final void baseIndex() {

@@ -42,6 +42,25 @@
 			<div class="left02top">
 				<div class="left02top_right"></div>
 				<div class="left02top_left"></div>
+				<div class="left02top_c">Log</div>
+			</div>
+			<div class="left02down">
+				<div class="left02down01">
+					<a  onclick="show_menuB(80)" href="javascript:;">
+					<div id="Bf080" class="left02down01_img"></div>Log查询</a>
+				</div>
+				<div class="left02down01_xia noneBox" id="Bli080">
+					<ul>
+						<li onmousemove="show_menu(10)" id="f010"><a href="javascript:document.getElementById('singlelog').submit();">&middot;单人查询</a></li>
+						<li onmousemove="show_menu(11)" id="f011"><a href="#">&middot;多人查询</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="left02">
+			<div class="left02top">
+				<div class="left02top_right"></div>
+				<div class="left02top_left"></div>
 				<div class="left02top_c">统计</div>
 			</div>
 			<div class="left02down">
@@ -61,17 +80,23 @@
 		<div class="center" id="Mobile" onclick="show_menuC()"></div>
 		<c:choose>
 			<c:when test="${page == 'retention'}"><%@ include file="/base/retention.jsp"%></c:when>
+			<c:when test="${page == 'singlelog'}"><%@ include file="/base/singlelog.jsp"%></c:when>
 			<c:otherwise><%@ include file="/base/selectServer.jsp"%></c:otherwise>
 		</c:choose>
 	</div>
-	<form id="logout" action="${ctx_path}/PSadminlogin/logout" method="post"></form>
+	<form id="selectSv" method="post">
+		<input type="hidden" name="username" value="${user.name}"/>
+	</form>
+	<form id="singlelog" action="${ctx_path}/PSadmin/singlelog" method="post">
+		<input type="hidden" name="serverId" value="${serverId}"/>
+		<input type="hidden" name="username" value="${user.name}"/>
+		<input type="hidden" name="page" value="singlelog"/>
+	</form>
 	<form id="retention" action="${ctx_path}/PSadmin/retention" method="post">
 		<input type="hidden" name="serverId" value="${serverId}"/>
 		<input type="hidden" name="username" value="${user.name}"/>
 		<input type="hidden" name="page" value="retention"/>
 	</form>
-	<form id="selectSv" method="post">
-		<input type="hidden" name="username" value="${user.name}"/>
-	</form>
+	<form id="logout" action="${ctx_path}/PSadminlogin/logout" method="post"></form>
 </body>
 </html>

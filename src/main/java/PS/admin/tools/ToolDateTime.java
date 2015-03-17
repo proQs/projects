@@ -162,7 +162,7 @@ public class ToolDateTime {
 	 */
 	public static int getDateDaySpace(Date start, Date end) {
 		int day = (int) (getDateHourSpace(start, end) / 24);
-		return day + 1;
+		return day;
 	}
 	
 	/**
@@ -199,30 +199,31 @@ public class ToolDateTime {
 	 * 日期区间分割
 	 * @param start
 	 * @param end
-	 * @param splitCount
+	 * @param split
 	 * @return
 	 */
-	public static List<Date> getDateSplit(Date start, Date end, long splitCount){
-		long startTime = start.getTime();
-		long endTime = end.getTime();
-		long between = endTime - startTime;
+	public static List<Date> getDateSplit(Date start, Date end, long split){
+		Calendar fromCalendar = Calendar.getInstance();
+		fromCalendar.setTime(start);
+		Calendar toCalendar = Calendar.getInstance();
+		toCalendar.setTime(end);
 
-		long count = splitCount - 1l;
-		long section = between / count;
-		
-		List<Date> list = new ArrayList<Date>();
-		list.add(start);
-		
-		for (long i = 1l ; i < count; i++) {
-			long time = startTime + section * i;
-			Date date = new Date();
-			date.setTime(time);
-			list.add(date);
+		List<Date> dateList = new ArrayList<Date>();
+
+		long between = toCalendar.getTime().getTime() - fromCalendar.getTime().getTime();
+		if(between < 0){
+			return dateList;
 		}
+
+		int dayCount = (int)(between / split);
+		dateList.add(fromCalendar.getTime());
 		
-		list.add(end);
-		
-		return list;
+		for (int i = 0; i < dayCount; i++) {
+			fromCalendar.add(Calendar.DATE, 1);// 增加一天
+			dateList.add(fromCalendar.getTime());
+		}
+
+		return dateList;
 	}
 	
 	/**

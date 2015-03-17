@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import PS.admin.common.Config;
 import PS.admin.common.RetentionType;
@@ -22,7 +23,16 @@ public class ViewRetentionService extends BaseService {
 
 	public static final ViewRetentionService service = new ViewRetentionService();
 
-	public List<retentionInfo> viewRetention(String startDate, int serverId) {
+	public List<retentionInfo> viewRetention(final String startDate, final int serverId) {
+		Callable<List<retentionInfo>> call = new Callable<List<retentionInfo>>() {
+			public List<retentionInfo> call() throws Exception {
+				return ViewRetentionService.service.getViewRetention(startDate, serverId);
+			}
+		};
+		return CommonUtil.callSingleThread(call);
+	}
+
+	private List<retentionInfo> getViewRetention(String startDate, int serverId) {
 		Date start = ToolDateTime.parse(startDate, ToolDateTime.pattern_ymd_hms);
 		ServerInfo sif = ServerInfo.getServerInfo(serverId);
 		String dbName = sif.getLogDBName();
@@ -62,9 +72,6 @@ public class ViewRetentionService extends BaseService {
 		if (sevenDay_retentionNum > 0) {
 			rif.add(new retentionInfo(startDate, RetentionType.SEVEBDAY.type(), allCreateNum, sevenDay_retentionNum,
 					(int) (new BigDecimal(sevenDay_retentionNum).divide(new BigDecimal(allCreateNum), 4, RoundingMode.HALF_UP).floatValue() * 10000)));
-		}
-		if (rif.size() == 0) {
-			return null;
 		}
 		return rif;
 	}

@@ -11,9 +11,9 @@ public class Config {
 
 	public static String key1 = "IUUhp5789iIUP0APUg2H98gf23viusab";
 	
-	public final static int ONE_DAY = 60 * 60 * 24;
-	public final static int THREE_DAY = ONE_DAY * 3;
-	public final static int SEVEN_DAY = ONE_DAY * 7;
+	public final static long ONE_DAY = 60 * 60 * 24 * 1000;
+	public final static long THREE_DAY = ONE_DAY * 3;
+	public final static long SEVEN_DAY = ONE_DAY * 7;
 
 	// System 0 ~ 9999
 	public static final int Log_StartServer = 0;
@@ -111,5 +111,20 @@ public class Config {
 	public static final int Log_RefushUnionShop = Log_UnionGoods + 1;
 	public static final int Log_UnionDemonsBattle = Log_RefushUnionShop + 1;
 	public static final int Log_UnionDemonsReward = Log_UnionDemonsBattle + 1;
+	
+	/**
+	 * 分页参数初始化值：默认显示第几页
+	 */
+	public static final int default_pageNumber = 1;
+	
+	/**
+	 * 分页参数初始化值：默认每页显示几多
+	 */
+	public static final int default_pageSize = 10;
+	
+	/**
+	 *  主数据源名称：系统主数据源
+	 */
+	public static final String db_dataSource_main = "main";
 
 }

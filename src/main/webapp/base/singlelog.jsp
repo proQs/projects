@@ -30,64 +30,74 @@
 
 	
 <div class="right" id="li010">
-	<form id="retention" action="${ctx_path}/PSadmin/viewretention" method="post">
+	<form id="singlelog" action="${ctx_path}/PSadmin/viewsinglelog" method="post">
 		<input type="hidden" name="serverId" value="${serverId}"/>
 		<input type="hidden" name="username" value="${user.name}"/>
-		<input type="hidden" name="page" value="retention"/>
+		<input type="hidden" name="page" value="singlelog"/>
 		
 		<div class="right01">
-			<img src="${ctx_path}/images/04.gif" /> 统计 &gt; <span>用户留存率</span>
+			<img src="${ctx_path}/images/04.gif" /> Log &gt; <span>Log查询</span>&gt; <span>单人查询</span>
 		</div>
-		<table id="rounded-corner" summary="查看留存率">
+		<table id="rounded-corner" summary="单人Log">
 			<thead>
 				<tr>
-					<th scope="col" class="rounded-company">查询时间</th>
-					<th scope="col" class="rounded-q4" colspan="3">
-						<input type="text" name="startDate" class="ui_timepicker" value="${startDatere}"></th>
+					<th scope="col" class="rounded-company">用户UID</th>
+					<th><input type="text" name="userUID" size="5" value="${userUID}"></th>
+					<th scope="col" class="rounded-q4" colspan="2"></th>
 				</tr>
 			</thead>
 			<tfoot>
 				<tr>
 					<td class="rounded-foot-left"></td>
 					<td class="rounded-foot-right" colspan="3">
-						<input type="submit" name="Submit" value="查看"/></td>
+						<input type="submit" name="Submit" value="查询"/></td>
 				</tr>
 			</tfoot>
 			<tbody>
+				<tr>
+		        	<td>开始时间</td>
+		        	<td colspan="3"><input type="text" name="startDate" class="ui_timepicker" value="${startDatere}"></td>
+		        </tr>
+				<tr>
+		        	<td>结束时间</td>
+		        	<td colspan="3"><input type="text" name="endDate" class="ui_timepicker" value="${endDatere}"></td>
+		        </tr>
 			</tbody>
 		</table>
-		<c:if test="${viewRetention != null}"> 
-			<table id="newspaper-a" summary="留存详细">
+		<c:if test="${viewSingleLog != null}"> 
+			<table id="newspaper-a" summary="Log详细">
 			    <thead>
 			    	<tr>
-			        	<th scope="col">注册日期</th>
-			        	<th scope="col">留存类型</th>
-			        	<th scope="col">注册人数</th>
-			            <th scope="col">留存人数</th>
-			            <th scope="col">留存率</th>
+			        	<th scope="col">Log类型</th>
+			        	<th scope="col">记录时间</th>
+			            <th scope="col" colspan="6">Log内容</th>
 			        </tr>
 			    </thead>
 			    <tbody>
-			    	<c:if test="${fn:length(retentionlist) == 0}">
+			    	<c:if test="${fn:length(singleLoglist) == 0}">
 			    		<tr>
 				        	<td>--</td>
 				        	<td>--</td>
-				        	<td>--</td>
-				        	<td>--</td>
-				        	<td>--</td>
+				        	<td colspan="6">--</td>
 				        </tr>
 			    	</c:if> 
-			   		<c:forEach items="${retentionlist}" var="rlist">
+			   		<c:forEach items="${singleLoglist}" var="slist">
+			   			<c:set var="logTime" value="${slist.log_time}"/>
 				    	<tr>
-				        	<td>${rlist.startDate}</td>
-				        	<td>${rlist.retentionType}</td>
-				        	<td>${rlist.createMembers}</td>
-				        	<td>${rlist.retentionMembers}</td>
-				        	<td>${rlist.prob / 100}%</td>
+				        	<td>${slist.type}</td>
+				        	<td>${fn:substring(logTime, 0, 19)}</td>
+				        	<td colspan="6">${slist.msg}</td>
 				        </tr>
 					</c:forEach>
 			    </tbody>
 			</table>
+			<div style="margin-left: 75%; margin-bottom: 2%;">
+				<c:set var="currentPage" value="${splitPage.pageNumber}" />
+				<c:set var="totalPage" value="${splitPage.totalPage}" />
+				<c:set var="actionUrl" value="${ctx_path}/PSadmin/viewsinglelog?currentPage=" />
+				<c:set var="urlParas" value="" />
+				<%@ include file="/base/paginate.jsp"%>
+			</div>
 		</c:if> 
 	</form>
 </div>
