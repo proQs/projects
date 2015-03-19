@@ -1,12 +1,12 @@
 package PS.admin.service;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Callable;
 
 import PS.admin.common.Config;
@@ -17,7 +17,6 @@ import PS.admin.tools.CommonUtil;
 import PS.admin.tools.ToolDateTime;
 
 import com.jfinal.plugin.activerecord.Db;
-import com.jfinal.plugin.activerecord.Record;
 
 public class ViewRetentionService extends BaseService {
 
@@ -37,15 +36,16 @@ public class ViewRetentionService extends BaseService {
 		ServerInfo sif = ServerInfo.getServerInfo(serverId);
 		String dbName = sif.getLogDBName();
 		String gameDbName = sif.getGameDBName();
-		HashMap<Long, Long> createMembers = getCreateUsers(start, dbName);
-		long[] lastLogin = getMembersLastlogin(createMembers.keySet(), gameDbName);
-		Long[] createLogin = createMembers.values().toArray(new Long[0]);
-		int allCreateNum = createLogin.length;
+		List<BigInteger> createMembers = getCreateUsers(start, dbName);
+		long[] lastLogin = getMembersLastlogin(createMembers, gameDbName);
+		log.info(Arrays.toString(lastLogin));
+		int allCreateNum = createMembers.size();
+		int allloginNum = getLoginNum(start, dbName);
 		int oneDay_retentionNum = 0;
 		int threeDay_retentionNum = 0;
 		int sevenDay_retentionNum = 0;
 		for (int i = 0; i < allCreateNum; i++) {
-			long days = lastLogin[i] - createLogin[i];
+			long days = lastLogin[i] - start.getTime();
 			if (days > Config.SEVEN_DAY) {
 				oneDay_retentionNum ++;
 				threeDay_retentionNum ++;
@@ -57,49 +57,47 @@ public class ViewRetentionService extends BaseService {
 				oneDay_retentionNum ++;
 			}
 		}
-		log.debug("oneDay_retentionNum = " + oneDay_retentionNum);
-		log.debug("threeDay_retentionNum = " + threeDay_retentionNum);
-		log.debug("sevenDay_retentionNum = " + sevenDay_retentionNum);
 		List<retentionInfo> rif = new ArrayList<retentionInfo>();
-		if (oneDay_retentionNum > 0) {
-			rif.add(new retentionInfo(startDate, RetentionType.ONEDAY.type(), allCreateNum, oneDay_retentionNum,
+		if (allCreateNum > 0) {
+			rif.add(new retentionInfo(allCreateNum, allloginNum, RetentionType.ONEDAY.number(), oneDay_retentionNum,
 					(int) (new BigDecimal(oneDay_retentionNum).divide(new BigDecimal(allCreateNum), 4, RoundingMode.HALF_UP).floatValue() * 10000)));
-		}
-		if (threeDay_retentionNum > 0) {
-			rif.add(new retentionInfo(startDate, RetentionType.THREEDAY.type(), allCreateNum, threeDay_retentionNum,
+			rif.add(new retentionInfo(allCreateNum, allloginNum, RetentionType.THREEDAY.number(), threeDay_retentionNum,
 					(int) (new BigDecimal(threeDay_retentionNum).divide(new BigDecimal(allCreateNum), 4, RoundingMode.HALF_UP).floatValue() * 10000)));
-		}
-		if (sevenDay_retentionNum > 0) {
-			rif.add(new retentionInfo(startDate, RetentionType.SEVEBDAY.type(), allCreateNum, sevenDay_retentionNum,
+			rif.add(new retentionInfo(allCreateNum, allloginNum, RetentionType.SEVEBDAY.number(), sevenDay_retentionNum,
 					(int) (new BigDecimal(sevenDay_retentionNum).divide(new BigDecimal(allCreateNum), 4, RoundingMode.HALF_UP).floatValue() * 10000)));
+		} else {
+			rif.add(new retentionInfo(allCreateNum, allloginNum, RetentionType.ONEDAY.number(), oneDay_retentionNum, 0));
+			rif.add(new retentionInfo(allCreateNum, allloginNum, RetentionType.THREEDAY.number(), threeDay_retentionNum, 0));
+			rif.add(new retentionInfo(allCreateNum, allloginNum, RetentionType.SEVEBDAY.number(), sevenDay_retentionNum, 0));
 		}
 		return rif;
 	}
 
-	private long[] getMembersLastlogin(Set<Long> keySet, String gameDbName) {
-		long[] mll = new long[keySet.size()];
+	private long[] getMembersLastlogin(List<BigInteger> createMembers, String gameDbName) {
+		long[] mll = new long[createMembers.size()];
 		int count = 0;
-		for (long uid : keySet) {
+		for (BigInteger uid : createMembers) {
 			String name = "usersinfo";
 			String sql = "select timestamp from " + name + " where uid = ?";
 			log.info(sql);
-			mll[count++] = ((java.math.BigInteger)Db.use(gameDbName).queryColumn(sql, uid)).longValue();
+			mll[count++] = ((java.math.BigInteger)Db.use(gameDbName).queryColumn(sql, uid)).longValue() * 1000;
 		}
 		return mll;
 	}
 
-	private HashMap<Long, Long> getCreateUsers(Date start, String dbName) {
+	private List<BigInteger> getCreateUsers(Date start, String dbName) {
 		String name = CommonUtil.getLogTable(start);
-//		String sql = "select uid,log_time from " + name + " where type = " + Config.Log_Login;
-		String sql = "select uid,log_time from " + name + " where type = " + Config.Log_CreateUser;
+		String sql = "select uid from " + name + " where type = " + Config.Log_CreateUser;
 		log.info(sql);
-		List<Record> re = Db.use(dbName).find(sql);
-		HashMap<Long, Long> map = new HashMap<Long, Long>();
-		for (Record record : re) {
-			map.put(record.getBigInteger("uid").longValue(), record.getTimestamp("log_time").getTime()/1000);
-		}
-		log.info(map.size());
-		return map;
+		List<BigInteger> re = Db.use(dbName).query(sql);
+		return re;
 	}
 
+	private int getLoginNum(Date start, String dbName) {
+		String name = CommonUtil.getLogTable(start);
+		String sql = "select * from " + name + " where type = " + Config.Log_Login + " group by uid";
+		log.info(sql);
+		List<?> num = Db.use(dbName).query(sql);
+		return num.size();
+	}
 }

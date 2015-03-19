@@ -2,7 +2,7 @@ package PS.admin.common;
 
 public enum RetentionType {
 
-	ONEDAY(0, "次日留存"),
+	ONEDAY(1, "次日留存"),
 	THREEDAY(3, "三日留存"),
 	SEVEBDAY(7, "七日留存");
 	

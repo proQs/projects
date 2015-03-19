@@ -416,8 +416,9 @@ public class CommonUtil {
 			e.printStackTrace();
 			log.error("futureException", e);
 			future.cancel(true);
-			executor.shutdownNow();
 			return null;
+		} finally {
+			executor.shutdownNow();
 		}
 		return ls;
 	}
@@ -431,8 +432,9 @@ public class CommonUtil {
 			e.printStackTrace();
 			log.error("futureException", e);
 			future.cancel(true);
-			executor.shutdownNow();
 			return false;
+		} finally {
+			executor.shutdownNow();
 		}
 		return true;
 	}

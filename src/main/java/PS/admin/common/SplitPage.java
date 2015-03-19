@@ -1,18 +1,15 @@
 package PS.admin.common;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-public class SplitPage implements Serializable {
+public class SplitPage<T> implements Serializable {
 
 	private static final long serialVersionUID = -7914983945613661637L;
 
 	/**
 	 * 分页查询参数
 	 */
-	private Map<String, String> queryParam;// 查询条件
 	private String orderColunm;// 排序条件
 	private String orderMode;// 排序方式
 	private int pageNumber = Config.default_pageNumber;// 第几页
@@ -21,8 +18,7 @@ public class SplitPage implements Serializable {
 	/**
 	 * 分页结果住数据
 	 */
-	@SuppressWarnings("rawtypes")
-	private List list; // 当前页数据
+	private List<T> list; // 总数据
 	private int totalPage; // 总页数
 	private int totalRow; // 总行数
 
@@ -33,6 +29,10 @@ public class SplitPage implements Serializable {
 	private boolean isFirst;// 是否第一页
 	private boolean isLast;// 是否最后一页
 
+	public void manualSplit() {
+		this.totalRow = list.size();
+		getTotalPage();
+	}
 	/**
 	 * 分页计算
 	 */
@@ -41,8 +41,6 @@ public class SplitPage implements Serializable {
 			getTotalPage();
 		}
 		
-		this.currentPageCount = (null != this.list ? this.list.size() : 0);// 当前页记录数
-
 		if (pageNumber == 1) {
 			this.isFirst = true;
 		} else {
@@ -77,25 +75,16 @@ public class SplitPage implements Serializable {
 		this.totalRow = totalRow;
 	}
 
-	public List<?> getList() {
+	public List<T> getList() {
 		return list;
 	}
 
-	public void setList(List<?> list) {
+	public void setList(List<T> list) {
 		this.list = list;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public void addList(List<?> list) {
-		Collections.addAll(this.list, list);
-	}
-
-	public Map<String, String> getQueryParam() {
-		return queryParam;
-	}
-
-	public void setQueryParam(Map<String, String> queryParam) {
-		this.queryParam = queryParam;
+	public void addList(List<T> list) {
+		this.list.addAll(list);
 	}
 
 	public String getOrderColunm() {
@@ -161,6 +150,21 @@ public class SplitPage implements Serializable {
 
 	public void setLast(boolean isLast) {
 		this.isLast = isLast;
+	}
+	public List<T> getPageList() {
+		List<T> ls;
+		if (isFirst) {
+			if (totalRow < pageSize) {
+				ls = list.subList(0, totalRow);
+			} else {
+				ls = list.subList(0, pageSize);
+			}
+		} else if (isLast) {
+			ls = list.subList(pageSize * (totalPage - 1), list.size());
+		} else {
+			ls = list.subList(pageSize * (pageNumber - 1), pageSize * pageNumber);
+		}
+		return ls;
 	}
 
 

@@ -16,6 +16,7 @@ import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.ext.handler.ContextPathHandler;
+import com.jfinal.ext.interceptor.SessionInViewInterceptor;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
@@ -64,6 +65,7 @@ public class PSAdminConfig extends JFinalConfig {
 	 */
 	public void configInterceptor(Interceptors me) {
 		me.add(new AuthenticationInterceptor());
+		me.add(new SessionInViewInterceptor());
 	}
 	
 	/**

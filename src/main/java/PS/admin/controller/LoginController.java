@@ -16,6 +16,10 @@ import com.jfinal.aop.Before;
 public class LoginController extends BaseController{
 
 	public void index() {
+		/*
+		HttpSession ss = getSession();
+		ss.setMaxInactiveInterval(3600);	//session超时设置,1小时
+		*/
 		render("login.jsp");
 	}
 	

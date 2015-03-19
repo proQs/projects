@@ -1,14 +1,15 @@
 package PS.admin.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import PS.admin.common.SplitPage;
 
 import com.jfinal.plugin.activerecord.Db;
-import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
 
 public abstract class BaseService {
 
@@ -22,11 +23,12 @@ public abstract class BaseService {
 	 * @param sqlExcept 
 	 * @param param
 	 */
-	protected void splitPageBase(String dataSource, SplitPage splitPage, String sql, String sqlExcept, Object param){
+	protected void splitPageBase(String dataSource, SplitPage<Record> splitPage, String sql, String sqlExcept, Object param){
 		// 接收返回值对象
 		StringBuilder formSqlSb = new StringBuilder();
+		formSqlSb.append(sql);
 		formSqlSb.append(sqlExcept);
-		LinkedList<Object> paramValue = new LinkedList<Object>();
+		List<Object> paramValue = new ArrayList<Object>();
 		Collections.addAll(paramValue, param);
 		
 		// 排序
@@ -38,14 +40,12 @@ public abstract class BaseService {
 		
 		String formSql = formSqlSb.toString();
 
-		Page<?> page = Db.use(dataSource).paginate(splitPage.getPageNumber(), splitPage.getPageSize(), sql, formSql, paramValue.toArray());
-		splitPage.setTotalPage(page.getTotalPage());
-		splitPage.setTotalRow(page.getTotalRow());
+		List<Record> ls = Db.use(dataSource).find(formSql, paramValue.toArray());
 		if (splitPage.getList() == null) {
-			splitPage.setList(page.getList());
+			splitPage.setList(ls);
 		} else {
-			splitPage.addList(page.getList());
+			splitPage.addList(ls);
 		}
-		splitPage.compute();
+		splitPage.manualSplit();
 	}
 }

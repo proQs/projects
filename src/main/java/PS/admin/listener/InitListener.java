@@ -4,8 +4,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import PS.admin.tools.CommonUtil;
-
 import com.jfinal.kit.PathKit;
 
 /**
@@ -21,7 +19,7 @@ public class InitListener implements ServletContextListener {
 		ServletContext context = event.getServletContext();
 		String path = context.getRealPath("/");
 		PathKit.setWebRootPath(path);
-		CommonUtil.getServerInfo(this.getClass().getClassLoader());
+//		CommonUtil.getServerInfo(this.getClass().getClassLoader());
 	}
 
 }

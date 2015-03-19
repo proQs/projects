@@ -25,23 +25,23 @@
 		
 		<c:choose>
 			<c:when test="${currentPage == 1}">
-				<span class="disabled prev_page">上页</span>
+				<span class="disabled" style="margin-right:0px;color:#666;">上页</span>
 			</c:when>
 			<c:otherwise>
-				<a href="javascript:splitPage(${currentPage - 1}${urlParas})" class="prev_page">上页</a>
+				<a href="javascript:splitPage(${currentPage - 1}${urlParas})">上页</a>
 			</c:otherwise>
 		</c:choose>
 		
 		<c:if test="${currentPage > 8}">
 			<a href="javascript:splitPage(${1}${urlParas})">${1}</a>
 			<a href="javascript:splitPage(${2}${urlParas})">${2}</a>
-			<span class="gap">…</span>
+			<span class="gap" style="margin-right:0px;">…</span>
 		</c:if>
 		
 		<c:forEach begin="${startPage}" end="${endPage}" var="i">
 			<c:choose>
 				<c:when test="${currentPage == i}">
-					<span class="current">${i}</span>
+					<span class="current" style="margin-right:0px;">${i}</span>
 				</c:when>
 				<c:otherwise>
 					<a href="javascript:splitPage(${i}${urlParas})">${i}</a>
@@ -50,17 +50,17 @@
 		</c:forEach>
 		
 		<c:if test="${(totalPage - currentPage) >= 8}">
-			<span class="gap">…</span>
+			<span class="gap" style="margin-right:0px;">…</span>
 			<a href="javascript:splitPage(${totalPage - 1}${urlParas})">${totalPage - 1}</a>
 			<a href="javascript:splitPage(${totalPage}${urlParas})">${totalPage}</a>
 		</c:if>
 		
 		<c:choose>
 			<c:when test="${currentPage == totalPage}">
-				<span class="disabled next_page">下页</span>
+				<span class="disabled" style="margin-right:0px;color:#666;">下页</span>
 			</c:when>
 			<c:otherwise>
-				<a href="javascript:splitPage(${currentPage + 1}${urlParas})" class="next_page" rel="next">下页</a>
+				<a href="javascript:splitPage(${currentPage + 1}${urlParas})" rel="next">下页</a>
 			</c:otherwise>
 		</c:choose>
 	</div>

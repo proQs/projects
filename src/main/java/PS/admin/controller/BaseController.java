@@ -9,6 +9,7 @@ import PS.admin.model.ServerInfo;
 import PS.admin.model.UserInfo;
 
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Record;
 
 public abstract class BaseController extends Controller{
 
@@ -17,16 +18,7 @@ public abstract class BaseController extends Controller{
 	/**
 	 * 全局变量
 	 */
-	protected SplitPage splitPage;	// 分页封装
-	
-	protected SplitPage getSplitPage() {
-		synchronized (log) {
-			if (splitPage == null) {
-				splitPage = new SplitPage();
-			}
-		}
-		return splitPage;
-	}
+	protected SplitPage<Record> splitPage;	// 分页封装
 	
 	/**
 	 * 获取ParamMap

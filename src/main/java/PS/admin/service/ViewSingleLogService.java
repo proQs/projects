@@ -9,11 +9,13 @@ import PS.admin.model.ServerInfo;
 import PS.admin.tools.CommonUtil;
 import PS.admin.tools.ToolDateTime;
 
+import com.jfinal.plugin.activerecord.Record;
+
 public class ViewSingleLogService extends BaseService {
 
 	public static final ViewSingleLogService service = new ViewSingleLogService();
 
-	public boolean viewSingleLog(final long uid, String startDate, String endDate, Integer serverId, final SplitPage splitPage) {
+	public boolean viewSingleLog(final long uid, String startDate, String endDate, Integer serverId, final SplitPage<Record> splitPage) {
 		Date start = ToolDateTime.parse(startDate, ToolDateTime.pattern_ymd_hms);
 		Date end = ToolDateTime.parse(endDate, ToolDateTime.pattern_ymd_hms);
 		final List<Date> lsd = ToolDateTime.getDateSplit(start, end, Config.ONE_DAY);
@@ -22,9 +24,6 @@ public class ViewSingleLogService extends BaseService {
 		final String dbName = sif.getLogDBName();
 		Runnable run = new Runnable() {
 			public void run() {
-				@SuppressWarnings("unused")
-				List<?> ls = splitPage.getList();
-				ls = null;
 				for (Date date : lsd) {
 					list(splitPage, dbName, uid, date);
 				}
@@ -40,7 +39,7 @@ public class ViewSingleLogService extends BaseService {
 	 * @param dbName 
 	 * @param start 
 	 */
-	private void list(SplitPage splitPage, String dbName, Object paramValue, Date start){
+	private void list(SplitPage<Record> splitPage, String dbName, Object paramValue, Date start){
 		String name = CommonUtil.getLogTable(start);
 		String sql = " select type,log_time,msg ";
 		String sqlExcept = "from " + name + " where uid = ?";

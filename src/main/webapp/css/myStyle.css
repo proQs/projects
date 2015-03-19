@@ -277,6 +277,19 @@ body
 	border-collapse: collapse;
 	border: 1px solid #69c;
 }
+#newspaper-a caption
+{
+	font-weight: normal;
+	font-size: 18px;
+	text-align:left;
+}
+#newspaper-a span
+{
+	font-weight: normal;
+	font-size: 18px;
+	margin-right: 25px;
+	color: #039;
+}
 #newspaper-a th
 {
 	padding: 12px 17px 12px 17px;

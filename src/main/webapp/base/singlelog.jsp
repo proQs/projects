@@ -70,7 +70,7 @@
 			    	<tr>
 			        	<th scope="col">Log类型</th>
 			        	<th scope="col">记录时间</th>
-			            <th scope="col" colspan="6">Log内容</th>
+			            <th scope="col" colspan="3">Log内容</th>
 			        </tr>
 			    </thead>
 			    <tbody>
@@ -78,7 +78,7 @@
 			    		<tr>
 				        	<td>--</td>
 				        	<td>--</td>
-				        	<td colspan="6">--</td>
+				        	<td colspan="3">--</td>
 				        </tr>
 			    	</c:if> 
 			   		<c:forEach items="${singleLoglist}" var="slist">
@@ -86,18 +86,18 @@
 				    	<tr>
 				        	<td>${slist.type}</td>
 				        	<td>${fn:substring(logTime, 0, 19)}</td>
-				        	<td colspan="6">${slist.msg}</td>
+				        	<td colspan="3">${slist.msg}</td>
 				        </tr>
 					</c:forEach>
 			    </tbody>
+				<caption align="bottom">
+					<c:set var="currentPage" value="${splitPage.pageNumber}" />
+					<c:set var="totalPage" value="${splitPage.totalPage}" />
+					<c:set var="actionUrl" value="${ctx_path}/PSadmin/viewsinglelog?currentPage=" />
+					<c:set var="urlParas" value="" />
+					<%@ include file="/base/paginate.jsp"%>
+				</caption>
 			</table>
-			<div style="margin-left: 75%; margin-bottom: 2%;">
-				<c:set var="currentPage" value="${splitPage.pageNumber}" />
-				<c:set var="totalPage" value="${splitPage.totalPage}" />
-				<c:set var="actionUrl" value="${ctx_path}/PSadmin/viewsinglelog?currentPage=" />
-				<c:set var="urlParas" value="" />
-				<%@ include file="/base/paginate.jsp"%>
-			</div>
 		</c:if> 
 	</form>
 </div>

@@ -52,7 +52,7 @@
 				<div class="left02down01_xia noneBox" id="Bli080">
 					<ul>
 						<li onmousemove="show_menu(10)" id="f010"><a href="javascript:document.getElementById('singlelog').submit();">&middot;单人查询</a></li>
-						<li onmousemove="show_menu(11)" id="f011"><a href="#">&middot;多人查询</a></li>
+						<!--<li onmousemove="show_menu(11)" id="f011"><a href="#">&middot;多人查询</a></li>-->
 					</ul>
 				</div>
 			</div>

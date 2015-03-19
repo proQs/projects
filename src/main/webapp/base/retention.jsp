@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <base href="${ctx_path}/">
 <link type="text/css" href="css/jquery-ui-1.8.17.custom.css"
 	rel="stylesheet" />
@@ -58,34 +57,40 @@
 		</table>
 		<c:if test="${viewRetention != null}"> 
 			<table id="newspaper-a" summary="留存详细">
+				<caption>
+					<span>注册日期:${startDatere}</span>
+					<span>注册人数:${retentionlist[0].createMembers}</span>
+					<span>登录人数:${retentionlist[0].loginMembers}</span>
+				</caption>
 			    <thead>
 			    	<tr>
-			        	<th scope="col">注册日期</th>
-			        	<th scope="col">留存类型</th>
-			        	<th scope="col">注册人数</th>
-			            <th scope="col">留存人数</th>
-			            <th scope="col">留存率</th>
+			        	<th>留存类型</th>
+			            <th>留存人数</th>
+			            <th>留存率</th>
 			        </tr>
 			    </thead>
 			    <tbody>
-			    	<c:if test="${fn:length(retentionlist) == 0}">
-			    		<tr>
-				        	<td>--</td>
-				        	<td>--</td>
-				        	<td>--</td>
-				        	<td>--</td>
-				        	<td>--</td>
-				        </tr>
-			    	</c:if> 
-			   		<c:forEach items="${retentionlist}" var="rlist">
+	    			<c:forEach items="${retentionlist}" var="rlist">
 				    	<tr>
-				        	<td>${rlist.startDate}</td>
-				        	<td>${rlist.retentionType}</td>
-				        	<td>${rlist.createMembers}</td>
-				        	<td>${rlist.retentionMembers}</td>
-				        	<td>${rlist.prob / 100}%</td>
+				    		<c:choose>
+				    			<c:when test="${rlist.retentionType == 1}">
+						        	<td>次日留存</td>
+						        	<td>${rlist.retentionMembers}</td>
+						        	<td>${rlist.prob / 100}%</td>
+				        		</c:when>
+				        		<c:when test="${rlist.retentionType == 3}">
+						        	<td>三日留存</td>
+						        	<td>${rlist.retentionMembers}</td>
+						        	<td>${rlist.prob / 100}%</td>
+				        		</c:when>
+				        		<c:when test="${rlist.retentionType == 7}">
+						        	<td>七日留存</td>
+						        	<td>${rlist.retentionMembers}</td>
+						        	<td>${rlist.prob / 100}%</td>
+				        		</c:when>
+				        	</c:choose>
 				        </tr>
-					</c:forEach>
+	        		</c:forEach>
 			    </tbody>
 			</table>
 		</c:if> 
