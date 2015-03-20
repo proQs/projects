@@ -13,6 +13,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -350,18 +353,10 @@ public class CommonUtil {
 			ServerDBInfo sdb = ServerInfo.getServerDBInfo().get(serverId);
 			String logURL = "jdbc:mysql://" + sdb.getLogAddress();
 			log.info("url="+ logURL + "user=" + sdb.getLogUser() + "psw=" +sdb.getLogPassWord());
-			C3p0Plugin cp = new C3p0Plugin(logURL, sdb.getLogUser(), sdb.getLogPassWord());
-			cp.setInitialPoolSize(4);
-			cp.setMinPoolSize(4);
-			cp.setMaxPoolSize(15);
-			cp.setMaxIdleTime(60);
-			cp.start();
-			ComboPooledDataSource ds = (ComboPooledDataSource)cp.getDataSource();
-			ds.setAcquireRetryAttempts(5);
-			ds.setAutomaticTestTable("testpslog");
-			ds.setIdleConnectionTestPeriod(3600 * 7);
-			ds.setMaxStatements(0);
-			ds.setMaxStatementsPerConnection(100);
+			if (!testConnect(sdb, logURL)) {
+				return false;
+			}
+			C3p0Plugin cp = setC3P0Config(sdb, logURL, "testpslog");
 			ActiveRecordPlugin arp = new ActiveRecordPlugin(logdb, cp);
 			arp.setDialect(new MysqlDialect());
 			arp.setShowSql(true);
@@ -373,24 +368,60 @@ public class CommonUtil {
 		}
 		return true;
 	}
+
+	/**
+	 * @param sdb
+	 * @param DBURL
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	private static boolean testConnect(ServerDBInfo sdb, String DBURL) throws SQLException {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(DBURL, sdb.getLogUser(), sdb.getLogPassWord());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * @param sdb
+	 * @param DBRUL
+	 * @param testTable 
+	 * @return
+	 */
+	private static C3p0Plugin setC3P0Config(ServerDBInfo sdb, String DBRUL, String testTable) {
+		C3p0Plugin cp = new C3p0Plugin(DBRUL, sdb.getLogUser(), sdb.getLogPassWord());
+		cp.setInitialPoolSize(4);
+		cp.setMinPoolSize(4);
+		cp.setMaxPoolSize(15);
+		cp.setMaxIdleTime(60);
+		cp.start();
+		ComboPooledDataSource ds = (ComboPooledDataSource)cp.getDataSource();
+		ds.setAcquireRetryAttempts(5);
+		ds.setAutomaticTestTable(testTable);
+		ds.setIdleConnectionTestPeriod(3600 * 7);
+		ds.setMaxStatements(0);
+		ds.setMaxStatementsPerConnection(100);
+		return cp;
+	}
 	
 	public static boolean connectGameDB(String gamedb, Integer serverId) {
 		try {
 			ServerDBInfo sdb = ServerInfo.getServerDBInfo().get(serverId);
 			String gameURL = "jdbc:mysql://" + sdb.getDbAddress();
 			log.info("url="+ gameURL);
-			C3p0Plugin cp = new C3p0Plugin(gameURL, sdb.getDbUser(), sdb.getDbPassWord());
-			cp.setInitialPoolSize(4);
-			cp.setMinPoolSize(4);
-			cp.setMaxPoolSize(15);
-			cp.setMaxIdleTime(60);
-			cp.start();
-			ComboPooledDataSource ds = (ComboPooledDataSource)cp.getDataSource();
-			ds.setAcquireRetryAttempts(5);
-			ds.setAutomaticTestTable("testpsword");
-			ds.setIdleConnectionTestPeriod(3600 * 7);
-			ds.setMaxStatements(0);
-			ds.setMaxStatementsPerConnection(100);
+			if (!testConnect(sdb, gameURL)) {
+				return false;
+			}
+			C3p0Plugin cp = setC3P0Config(sdb, gameURL, "testpsworld");
 			ActiveRecordPlugin arp = new ActiveRecordPlugin(gamedb, cp);
 			arp.setDialect(new MysqlDialect());
 			arp.setShowSql(true);
