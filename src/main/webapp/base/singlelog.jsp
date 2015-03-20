@@ -94,7 +94,8 @@
 					<c:set var="currentPage" value="${splitPage.pageNumber}" />
 					<c:set var="totalPage" value="${splitPage.totalPage}" />
 					<c:set var="actionUrl" value="${ctx_path}/PSadmin/viewsinglelog?currentPage=" />
-					<c:set var="urlParas" value="" />
+					<c:set var="pagename" value="singlelog" />
+					<c:set var="urlParas" value="&userUID=${userUID}" />
 					<%@ include file="/base/paginate.jsp"%>
 				</caption>
 			</table>

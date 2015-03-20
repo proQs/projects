@@ -30,46 +30,49 @@
 
 	
 <div class="right" id="li010">
-	<form id="singlelog" action="${ctx_path}/PSadmin/viewmultilog" method="post">
-		<input type="hidden" name="serverId" value="${serverId}"/>
-		<input type="hidden" name="username" value="${user.name}"/>
-		<input type="hidden" name="page" value="multilogResult"/>
 		
-		<div class="right01">
-			<img src="${ctx_path}/images/04.gif" /> Log &gt; <span>Log查询</span>&gt; <span>多人查询</span>
-		</div>
-		<table id="newspaper-a" summary="Log详细">
-			    <thead>
-			    	<tr>
-			        	<th scope="col">Log类型</th>
-			        	<th scope="col">记录时间</th>
-			            <th scope="col" colspan="3">Log内容</th>
+	<div class="right01">
+		<img src="${ctx_path}/images/04.gif" /> Log &gt; <span>Log查询</span>&gt; <span>多人查询</span>
+	</div>
+	<div style="margin-left: 45px;margin-top: 10px;font-size: 18px;">
+		<a href="javascript:document.getElementById('multilog').submit();" style="text-decoration: none;color: #1303F7;text-shadow: 0px 0px 2px white;">
+			回到查询</a>
+	</div>
+	<table id="newspaper-a" summary="Log详细">
+		    <thead>
+		    	<tr>
+		        	<th scope="col">用户UID</th>
+		        	<th scope="col">Log类型</th>
+		        	<th scope="col">记录时间</th>
+		            <th scope="col" colspan="4">Log内容</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    	<c:if test="${fn:length(multiLoglist) == 0}">
+		    		<tr>
+			        	<td>--</td>
+			        	<td>--</td>
+			        	<td>--</td>
+			        	<td colspan="4">--</td>
 			        </tr>
-			    </thead>
-			    <tbody>
-			    	<c:if test="${fn:length(singleLoglist) == 0}">
-			    		<tr>
-				        	<td>--</td>
-				        	<td>--</td>
-				        	<td colspan="3">--</td>
-				        </tr>
-			    	</c:if> 
-			   		<c:forEach items="${singleLoglist}" var="slist">
-			   			<c:set var="logTime" value="${slist.log_time}"/>
-				    	<tr>
-				        	<td>${slist.type}</td>
-				        	<td>${fn:substring(logTime, 0, 19)}</td>
-				        	<td colspan="3">${slist.msg}</td>
-				        </tr>
-					</c:forEach>
-			    </tbody>
-				<caption align="bottom">
-					<c:set var="currentPage" value="${splitPage.pageNumber}" />
-					<c:set var="totalPage" value="${splitPage.totalPage}" />
-					<c:set var="actionUrl" value="${ctx_path}/PSadmin/viewsinglelog?currentPage=" />
-					<c:set var="urlParas" value="" />
-					<%@ include file="/base/paginate.jsp"%>
-				</caption>
-			</table>
-	</form>
+		    	</c:if> 
+		   		<c:forEach items="${multiLoglist}" var="slist">
+		   			<c:set var="logTime" value="${slist.log_time}"/>
+			    	<tr>
+			        	<td>${slist.uid}</td>
+			        	<td>${slist.type}</td>
+			        	<td>${fn:substring(logTime, 0, 19)}</td>
+			        	<td colspan="4">${slist.msg}</td>
+			        </tr>
+				</c:forEach>
+		    </tbody>
+			<caption align="bottom">
+				<c:set var="currentPage" value="${splitPage.pageNumber}" />
+				<c:set var="totalPage" value="${splitPage.totalPage}" />
+				<c:set var="actionUrl" value="${ctx_path}/PSadmin/viewmultilog?currentPage=" />
+				<c:set var="pagename" value="multilogResult" />
+				<c:set var="urlParas" value="" />
+				<%@ include file="/base/paginate.jsp"%>
+			</caption>
+		</table>
 </div>

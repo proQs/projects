@@ -22,7 +22,7 @@ public class ViewMultiLogService extends BaseService {
 		ServerInfo sif = ServerInfo.getServerInfo(serverId);
 		final String dbName = sif.getLogDBName();
 		for (int i = 0; i < logTypes.length; i++) {
-			logTypes[i] += 2000;
+			logTypes[i] += Config.Log_UserLevelUp;
 		}
 		Runnable run = new Runnable() {
 			public void run() {
@@ -45,7 +45,16 @@ public class ViewMultiLogService extends BaseService {
 	private void list(SplitPage<Record> splitPage, String dbName, Date start, Integer[] logTypes){
 		String name = CommonUtil.getLogTable(start);
 		String sql = " select uid,type,log_time,msg ";
-		String sqlExcept = "from " + name;
-		splitPageBase(dbName, splitPage, sql, sqlExcept, logTypes);
+		StringBuilder sqlExcept = new StringBuilder("from ");
+		sqlExcept.append(name);
+		sqlExcept.append(" where type in (");
+		for (int i = 0; i < logTypes.length; i++) {
+			sqlExcept.append("?");
+			if (i != logTypes.length - 1) {
+				sqlExcept.append(", ");
+			}
+		}
+		sqlExcept.append(")");
+		splitPageBase(dbName, splitPage, sql, sqlExcept.toString(), logTypes);
 	}
 }

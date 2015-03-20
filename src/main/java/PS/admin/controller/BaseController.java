@@ -16,11 +16,6 @@ public abstract class BaseController extends Controller{
 	protected static Logger log = Logger.getLogger(BaseController.class);
 	
 	/**
-	 * 全局变量
-	 */
-	protected SplitPage<Record> splitPage;	// 分页封装
-	
-	/**
 	 * 获取ParamMap
 	 * @return
 	 */
@@ -41,8 +36,9 @@ public abstract class BaseController extends Controller{
 	 * 设置默认排序
 	 * @param colunm
 	 * @param mode
+	 * @param splitPage 
 	 */
-	protected void defaultOrder(String colunm, String mode){
+	protected void defaultOrder(String colunm, String mode, SplitPage<Record> splitPage){
 		if(null == splitPage.getOrderColunm() || splitPage.getOrderColunm().isEmpty()){
 			splitPage.setOrderColunm(colunm);
 			splitPage.setOrderMode(mode);

@@ -25,7 +25,6 @@ public class SplitPage<T> implements Serializable {
 	/**
 	 * 分页显示辅助属性
 	 */
-	private int currentPageCount;// 当前页记录数量
 	private boolean isFirst;// 是否第一页
 	private boolean isLast;// 是否最后一页
 
@@ -126,14 +125,6 @@ public class SplitPage<T> implements Serializable {
 
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
-	}
-
-	public int getCurrentPageCount() {
-		return currentPageCount;
-	}
-
-	public void setCurrentPageCount(int currentPageCount) {
-		this.currentPageCount = currentPageCount;
 	}
 
 	public boolean isFirst() {

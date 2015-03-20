@@ -57,11 +57,10 @@ var getD = function(id) {
 		}
 	}
 	
-	function splitPage(currentPage) {
-		
-		var url =document.getElementById("singlelog").action;
-		document.getElementById("singlelog").action=url+"?currentPage="+currentPage;
-		document.getElementById("singlelog").submit();
+	function splitPage(currentPage, actionURL,page) {
+		document.getElementById("paginate").action=actionURL+currentPage;
+		document.getElementById("splitPage").value=page;
+		document.getElementById("paginate").submit();
 	}
 	function checkAll(str) 
 	{ 

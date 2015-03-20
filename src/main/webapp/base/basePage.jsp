@@ -104,6 +104,11 @@
 		<input type="hidden" name="username" value="${user.name}"/>
 		<input type="hidden" name="page" value="retention"/>
 	</form>
+	<form id="paginate" method="post">
+		<input type="hidden" name="serverId" value="${serverId}"/>
+		<input type="hidden" name="username" value="${user.name}"/>
+		<input type="hidden" name="page" id="splitPage"/>
+	</form>
 	<form id="logout" action="${ctx_path}/PSadminlogin/logout" method="post"></form>
 </body>
 </html>

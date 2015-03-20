@@ -19,7 +19,8 @@ public class viewMultiLogController extends BaseFunctionController{
 		SplitPage<Record> sp = getSessionAttr("multiSplitPage");
 		if (getPara("currentPage") == null || sp == null) {
 			sp = new SplitPage<Record>();
-//			defaultOrder("logType", "asc");
+			sp.setPageSize(20);
+			defaultOrder("type,uid", "asc" , sp);
 			if (!ViewMultiLogService.service.viewMultiLog(startDate, endDate, serverId , logTypes, sp)) {
 				return false;
 			}

@@ -22,7 +22,7 @@ public class SelectServerController extends BaseController{
 				return;
 			}
 			log.info(serMap);
-			if (serMap.putIfAbsent(serverId, false) != null) {
+			if (serMap.putIfAbsent(serverId, false) != null && serMap.get(serverId) == true) {
 				return;
 			}
 			ServerInfo sif = ServerInfo.getServerInfo(serverId);
@@ -32,9 +32,11 @@ public class SelectServerController extends BaseController{
 				if (serMap.get(serverId)) {
 					return;
 				}
-				CommonUtil.connectLogDB(logdb, serverId);
-				CommonUtil.connectGameDB(gamedb, serverId);
-				serMap.put(serverId, true);
+				if (CommonUtil.connectLogDB(logdb, serverId) && CommonUtil.connectGameDB(gamedb, serverId)) {
+					serMap.put(serverId, true);
+				} else {
+					serMap.put(serverId, false);
+				}
 			}
 		}
 	}

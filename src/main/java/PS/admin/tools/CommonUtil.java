@@ -345,50 +345,62 @@ public class CommonUtil {
 
 	private static Logger log = Logger.getLogger(CommonUtil.class);
 	
-	public static void connectLogDB(String logdb, Integer serverId) {
-		ServerDBInfo sdb = ServerInfo.getServerDBInfo().get(serverId);
-		String logURL = "jdbc:mysql://" + sdb.getLogAddress();
-		log.info("url="+ logURL + "user=" + sdb.getLogUser() + "psw=" +sdb.getLogPassWord());
-		C3p0Plugin cp = new C3p0Plugin(logURL, sdb.getLogUser(), sdb.getLogPassWord());
-		cp.setInitialPoolSize(4);
-		cp.setMinPoolSize(4);
-		cp.setMaxPoolSize(15);
-		cp.setMaxIdleTime(60);
-		cp.start();
-		ComboPooledDataSource ds = (ComboPooledDataSource)cp.getDataSource();
-		ds.setAcquireRetryAttempts(5);
-		ds.setAutomaticTestTable("Test");
-		ds.setIdleConnectionTestPeriod(3600 * 7);
-		ds.setMaxStatements(0);
-		ds.setMaxStatementsPerConnection(100);
-		ActiveRecordPlugin arp = new ActiveRecordPlugin(logdb, cp);
-		arp.setDialect(new MysqlDialect());
-		arp.setShowSql(true);
-		arp.start();
-		log.info("连接--"+logdb+"--成功");
+	public static boolean connectLogDB(String logdb, Integer serverId) {
+		try {
+			ServerDBInfo sdb = ServerInfo.getServerDBInfo().get(serverId);
+			String logURL = "jdbc:mysql://" + sdb.getLogAddress();
+			log.info("url="+ logURL + "user=" + sdb.getLogUser() + "psw=" +sdb.getLogPassWord());
+			C3p0Plugin cp = new C3p0Plugin(logURL, sdb.getLogUser(), sdb.getLogPassWord());
+			cp.setInitialPoolSize(4);
+			cp.setMinPoolSize(4);
+			cp.setMaxPoolSize(15);
+			cp.setMaxIdleTime(60);
+			cp.start();
+			ComboPooledDataSource ds = (ComboPooledDataSource)cp.getDataSource();
+			ds.setAcquireRetryAttempts(5);
+			ds.setAutomaticTestTable("testpslog");
+			ds.setIdleConnectionTestPeriod(3600 * 7);
+			ds.setMaxStatements(0);
+			ds.setMaxStatementsPerConnection(100);
+			ActiveRecordPlugin arp = new ActiveRecordPlugin(logdb, cp);
+			arp.setDialect(new MysqlDialect());
+			arp.setShowSql(true);
+			arp.start();
+			log.info("连接--"+logdb+"--成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 	
-	public static void connectGameDB(String gamedb, Integer serverId) {
-		ServerDBInfo sdb = ServerInfo.getServerDBInfo().get(serverId);
-		String gameURL = "jdbc:mysql://" + sdb.getDbAddress();
-		log.info("url="+ gameURL);
-		C3p0Plugin cp = new C3p0Plugin(gameURL, sdb.getDbUser(), sdb.getDbPassWord());
-		cp.setInitialPoolSize(4);
-		cp.setMinPoolSize(4);
-		cp.setMaxPoolSize(15);
-		cp.setMaxIdleTime(60);
-		cp.start();
-		ComboPooledDataSource ds = (ComboPooledDataSource)cp.getDataSource();
-		ds.setAcquireRetryAttempts(5);
-		ds.setAutomaticTestTable("Test");
-		ds.setIdleConnectionTestPeriod(3600 * 7);
-		ds.setMaxStatements(0);
-		ds.setMaxStatementsPerConnection(100);
-		ActiveRecordPlugin arp = new ActiveRecordPlugin(gamedb, cp);
-		arp.setDialect(new MysqlDialect());
-		arp.setShowSql(true);
-		arp.start();
-		log.info("连接--"+gamedb+"--成功");
+	public static boolean connectGameDB(String gamedb, Integer serverId) {
+		try {
+			ServerDBInfo sdb = ServerInfo.getServerDBInfo().get(serverId);
+			String gameURL = "jdbc:mysql://" + sdb.getDbAddress();
+			log.info("url="+ gameURL);
+			C3p0Plugin cp = new C3p0Plugin(gameURL, sdb.getDbUser(), sdb.getDbPassWord());
+			cp.setInitialPoolSize(4);
+			cp.setMinPoolSize(4);
+			cp.setMaxPoolSize(15);
+			cp.setMaxIdleTime(60);
+			cp.start();
+			ComboPooledDataSource ds = (ComboPooledDataSource)cp.getDataSource();
+			ds.setAcquireRetryAttempts(5);
+			ds.setAutomaticTestTable("testpsword");
+			ds.setIdleConnectionTestPeriod(3600 * 7);
+			ds.setMaxStatements(0);
+			ds.setMaxStatementsPerConnection(100);
+			ActiveRecordPlugin arp = new ActiveRecordPlugin(gamedb, cp);
+			arp.setDialect(new MysqlDialect());
+			arp.setShowSql(true);
+			arp.start();
+			log.info("连接--"+gamedb+"--成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 	
 	public static String getLogTable(Date date) {
