@@ -289,7 +289,6 @@ public class CommonUtil {
 			if(data != null)
 				return new DataInputStream(new ByteArrayInputStream(data));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -337,7 +336,9 @@ public class CommonUtil {
 		} catch (IOException e) {
 			log.info(url + "服务器未启动!");
 		} finally {
-			httpConnection.disconnect();
+			if (httpConnection != null) {
+				httpConnection.disconnect();
+			}
 		}
 		return dis;
 	}
@@ -349,12 +350,20 @@ public class CommonUtil {
 		String logURL = "jdbc:mysql://" + sdb.getLogAddress();
 		log.info("url="+ logURL + "user=" + sdb.getLogUser() + "psw=" +sdb.getLogPassWord());
 		C3p0Plugin cp = new C3p0Plugin(logURL, sdb.getLogUser(), sdb.getLogPassWord());
+		cp.setInitialPoolSize(4);
+		cp.setMinPoolSize(4);
+		cp.setMaxPoolSize(15);
+		cp.setMaxIdleTime(60);
 		cp.start();
 		ComboPooledDataSource ds = (ComboPooledDataSource)cp.getDataSource();
-		ds.setMaxIdleTime(60);
 		ds.setAcquireRetryAttempts(5);
+		ds.setAutomaticTestTable("Test");
+		ds.setIdleConnectionTestPeriod(3600 * 7);
+		ds.setMaxStatements(0);
+		ds.setMaxStatementsPerConnection(100);
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(logdb, cp);
 		arp.setDialect(new MysqlDialect());
+		arp.setShowSql(true);
 		arp.start();
 		log.info("连接--"+logdb+"--成功");
 	}
@@ -364,12 +373,20 @@ public class CommonUtil {
 		String gameURL = "jdbc:mysql://" + sdb.getDbAddress();
 		log.info("url="+ gameURL);
 		C3p0Plugin cp = new C3p0Plugin(gameURL, sdb.getDbUser(), sdb.getDbPassWord());
+		cp.setInitialPoolSize(4);
+		cp.setMinPoolSize(4);
+		cp.setMaxPoolSize(15);
+		cp.setMaxIdleTime(60);
 		cp.start();
 		ComboPooledDataSource ds = (ComboPooledDataSource)cp.getDataSource();
-		ds.setMaxIdleTime(60);
 		ds.setAcquireRetryAttempts(5);
+		ds.setAutomaticTestTable("Test");
+		ds.setIdleConnectionTestPeriod(3600 * 7);
+		ds.setMaxStatements(0);
+		ds.setMaxStatementsPerConnection(100);
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(gamedb, cp);
 		arp.setDialect(new MysqlDialect());
+		arp.setShowSql(true);
 		arp.start();
 		log.info("连接--"+gamedb+"--成功");
 	}

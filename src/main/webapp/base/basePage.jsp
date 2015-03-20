@@ -52,7 +52,7 @@
 				<div class="left02down01_xia noneBox" id="Bli080">
 					<ul>
 						<li onmousemove="show_menu(10)" id="f010"><a href="javascript:document.getElementById('singlelog').submit();">&middot;单人查询</a></li>
-						<!--<li onmousemove="show_menu(11)" id="f011"><a href="#">&middot;多人查询</a></li>-->
+						<li onmousemove="show_menu(11)" id="f011"><a href="javascript:document.getElementById('multilog').submit();">&middot;多人查询</a></li>
 					</ul>
 				</div>
 			</div>
@@ -81,6 +81,8 @@
 		<c:choose>
 			<c:when test="${page == 'retention'}"><%@ include file="/base/retention.jsp"%></c:when>
 			<c:when test="${page == 'singlelog'}"><%@ include file="/base/singlelog.jsp"%></c:when>
+			<c:when test="${page == 'multilog'}"><%@ include file="/base/multilog.jsp"%></c:when>
+			<c:when test="${page == 'multilogResult'}"><%@ include file="/base/multilogResult.jsp"%></c:when>
 			<c:otherwise><%@ include file="/base/selectServer.jsp"%></c:otherwise>
 		</c:choose>
 	</div>
@@ -91,6 +93,11 @@
 		<input type="hidden" name="serverId" value="${serverId}"/>
 		<input type="hidden" name="username" value="${user.name}"/>
 		<input type="hidden" name="page" value="singlelog"/>
+	</form>
+	<form id="multilog" action="${ctx_path}/PSadmin/multilog" method="post">
+		<input type="hidden" name="serverId" value="${serverId}"/>
+		<input type="hidden" name="username" value="${user.name}"/>
+		<input type="hidden" name="page" value="multilog"/>
 	</form>
 	<form id="retention" action="${ctx_path}/PSadmin/retention" method="post">
 		<input type="hidden" name="serverId" value="${serverId}"/>

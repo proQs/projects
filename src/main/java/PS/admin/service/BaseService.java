@@ -23,7 +23,7 @@ public abstract class BaseService {
 	 * @param sqlExcept 
 	 * @param param
 	 */
-	protected void splitPageBase(String dataSource, SplitPage<Record> splitPage, String sql, String sqlExcept, Object param){
+	protected void splitPageBase(String dataSource, SplitPage<Record> splitPage, String sql, String sqlExcept, Object[] param){
 		// 接收返回值对象
 		StringBuilder formSqlSb = new StringBuilder();
 		formSqlSb.append(sql);

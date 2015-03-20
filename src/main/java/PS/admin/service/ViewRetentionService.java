@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -37,15 +36,14 @@ public class ViewRetentionService extends BaseService {
 		String dbName = sif.getLogDBName();
 		String gameDbName = sif.getGameDBName();
 		List<BigInteger> createMembers = getCreateUsers(start, dbName);
-		long[] lastLogin = getMembersLastlogin(createMembers, gameDbName);
-		log.info(Arrays.toString(lastLogin));
+		List<BigInteger> lastLogin = getMembersLastlogin(createMembers, gameDbName);
 		int allCreateNum = createMembers.size();
 		int allloginNum = getLoginNum(start, dbName);
 		int oneDay_retentionNum = 0;
 		int threeDay_retentionNum = 0;
 		int sevenDay_retentionNum = 0;
-		for (int i = 0; i < allCreateNum; i++) {
-			long days = lastLogin[i] - start.getTime();
+		for (int i = 0; i < lastLogin.size(); i++) {
+			long days = lastLogin.get(i).longValue() * 1000 - start.getTime();
 			if (days > Config.SEVEN_DAY) {
 				oneDay_retentionNum ++;
 				threeDay_retentionNum ++;
@@ -73,22 +71,26 @@ public class ViewRetentionService extends BaseService {
 		return rif;
 	}
 
-	private long[] getMembersLastlogin(List<BigInteger> createMembers, String gameDbName) {
-		long[] mll = new long[createMembers.size()];
-		int count = 0;
-		for (BigInteger uid : createMembers) {
-			String name = "usersinfo";
-			String sql = "select timestamp from " + name + " where uid = ?";
-			log.info(sql);
-			mll[count++] = ((java.math.BigInteger)Db.use(gameDbName).queryColumn(sql, uid)).longValue() * 1000;
+	private List<BigInteger> getMembersLastlogin(List<BigInteger> createMembers, String gameDbName) {
+		List<BigInteger> ls = new ArrayList<BigInteger>();
+		if (createMembers.size() > 0) {
+			StringBuilder sql = new StringBuilder("select timestamp from usersinfo where uid in (");
+			for (int i = 0; i < createMembers.size(); i++) {
+				sql.append("?");
+				if (i != createMembers.size() - 1) {
+					sql.append(", ");
+				}
+			}
+			sql.append(")");
+			ls = Db.use(gameDbName).query(sql.toString(), createMembers.toArray());
+			log.info("ls = " + ls.toString());
 		}
-		return mll;
+		return ls;
 	}
 
 	private List<BigInteger> getCreateUsers(Date start, String dbName) {
 		String name = CommonUtil.getLogTable(start);
 		String sql = "select uid from " + name + " where type = " + Config.Log_CreateUser;
-		log.info(sql);
 		List<BigInteger> re = Db.use(dbName).query(sql);
 		return re;
 	}
@@ -96,7 +98,6 @@ public class ViewRetentionService extends BaseService {
 	private int getLoginNum(Date start, String dbName) {
 		String name = CommonUtil.getLogTable(start);
 		String sql = "select * from " + name + " where type = " + Config.Log_Login + " group by uid";
-		log.info(sql);
 		List<?> num = Db.use(dbName).query(sql);
 		return num.size();
 	}

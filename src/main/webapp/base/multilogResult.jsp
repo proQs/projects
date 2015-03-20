@@ -30,42 +30,15 @@
 
 	
 <div class="right" id="li010">
-	<form id="viewsinglelog" action="${ctx_path}/PSadmin/viewsinglelog" method="post">
+	<form id="singlelog" action="${ctx_path}/PSadmin/viewmultilog" method="post">
 		<input type="hidden" name="serverId" value="${serverId}"/>
 		<input type="hidden" name="username" value="${user.name}"/>
-		<input type="hidden" name="page" value="singlelog"/>
+		<input type="hidden" name="page" value="multilogResult"/>
 		
 		<div class="right01">
-			<img src="${ctx_path}/images/04.gif" /> Log &gt; <span>Log查询</span>&gt; <span>单人查询</span>
+			<img src="${ctx_path}/images/04.gif" /> Log &gt; <span>Log查询</span>&gt; <span>多人查询</span>
 		</div>
-		<table id="rounded-corner" summary="单人Log">
-			<thead>
-				<tr>
-					<th scope="col" class="rounded-company">用户UID</th>
-					<th><input type="text" name="userUID" size="5" value="${userUID}"></th>
-					<th scope="col" class="rounded-q4" colspan="2"></th>
-				</tr>
-			</thead>
-			<tfoot>
-				<tr>
-					<td class="rounded-foot-left"></td>
-					<td class="rounded-foot-right" colspan="3">
-						<input type="submit" name="Submit" value="查询"/></td>
-				</tr>
-			</tfoot>
-			<tbody>
-				<tr>
-		        	<td>开始时间</td>
-		        	<td colspan="3"><input type="text" name="startDate" class="ui_timepicker" value="${startDatere}"></td>
-		        </tr>
-				<tr>
-		        	<td>结束时间</td>
-		        	<td colspan="3"><input type="text" name="endDate" class="ui_timepicker" value="${endDatere}"></td>
-		        </tr>
-			</tbody>
-		</table>
-		<c:if test="${viewSingleLog != null}"> 
-			<table id="newspaper-a" summary="Log详细">
+		<table id="newspaper-a" summary="Log详细">
 			    <thead>
 			    	<tr>
 			        	<th scope="col">Log类型</th>
@@ -98,6 +71,5 @@
 					<%@ include file="/base/paginate.jsp"%>
 				</caption>
 			</table>
-		</c:if> 
 	</form>
 </div>

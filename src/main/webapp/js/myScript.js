@@ -63,4 +63,10 @@ var getD = function(id) {
 		document.getElementById("singlelog").action=url+"?currentPage="+currentPage;
 		document.getElementById("singlelog").submit();
 	}
-	
+	function checkAll(str) 
+	{ 
+		var a = document.getElementsByName(str); 
+		var n = a.length; 
+		for (var i=0; i<n; i++) 
+		a[i].checked = window.event.srcElement.checked; 
+	} 

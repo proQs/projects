@@ -3,8 +3,10 @@ package PS.admin.config;
 import PS.admin.controller.LoginController;
 import PS.admin.controller.SelectServerController;
 import PS.admin.controller.ViewRetentionController;
+import PS.admin.controller.multiLogController;
 import PS.admin.controller.retentionController;
 import PS.admin.controller.singleLogController;
+import PS.admin.controller.viewMultiLogController;
 import PS.admin.controller.viewSingleLogController;
 import PS.admin.interceptor.AuthenticationInterceptor;
 import PS.admin.model.Adminaccount;
@@ -43,6 +45,8 @@ public class PSAdminConfig extends JFinalConfig {
 		me.add("/PSadmin/viewretention", ViewRetentionController.class);
 		me.add("/PSadmin/singlelog", singleLogController.class);
 		me.add("/PSadmin/viewsinglelog", viewSingleLogController.class);
+		me.add("/PSadmin/multilog", multiLogController.class);
+		me.add("/PSadmin/viewmultilog", viewMultiLogController.class);
 	}
 	
 	/**
@@ -57,6 +61,7 @@ public class PSAdminConfig extends JFinalConfig {
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
 		me.add(arp);
 		arp.setDialect(new MysqlDialect());
+		arp.setShowSql(true);
 		arp.addMapping("adminaccount", "GID", Adminaccount.class);	// 映射adminaccount 表到 Adminaccount模型
 	}
 	

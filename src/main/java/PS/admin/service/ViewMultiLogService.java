@@ -11,39 +11,41 @@ import PS.admin.tools.ToolDateTime;
 
 import com.jfinal.plugin.activerecord.Record;
 
-public class ViewSingleLogService extends BaseService {
+public class ViewMultiLogService extends BaseService {
 
-	public static final ViewSingleLogService service = new ViewSingleLogService();
+	public static final ViewMultiLogService service = new ViewMultiLogService();
 
-	public boolean viewSingleLog(final long uid, String startDate, String endDate, Integer serverId, final SplitPage<Record> splitPage) {
+	public boolean viewMultiLog(String startDate, String endDate, Integer serverId, final Integer[] logTypes, final SplitPage<Record> splitPage) {
 		Date start = ToolDateTime.parse(startDate, ToolDateTime.pattern_ymd_hms);
 		Date end = ToolDateTime.parse(endDate, ToolDateTime.pattern_ymd_hms);
 		final List<Date> lsd = ToolDateTime.getDateSplit(start, end, Config.ONE_DAY);
-		log.info(lsd.toString());
 		ServerInfo sif = ServerInfo.getServerInfo(serverId);
 		final String dbName = sif.getLogDBName();
+		for (int i = 0; i < logTypes.length; i++) {
+			logTypes[i] += 2000;
+		}
 		Runnable run = new Runnable() {
 			public void run() {
 				for (Date date : lsd) {
-					list(splitPage, dbName, uid, date);
+					list(splitPage, dbName, date, logTypes);
 				}
 			}
 		};
 		return CommonUtil.runSingleThread(run);
 	}
-
+	
 	/**
 	 * 分页
 	 * @param splitPage
 	 * @param paramValue 
 	 * @param dbName 
 	 * @param start 
+	 * @param logTypes 
 	 */
-	private void list(SplitPage<Record> splitPage, String dbName, Object paramValue, Date start){
+	private void list(SplitPage<Record> splitPage, String dbName, Date start, Integer[] logTypes){
 		String name = CommonUtil.getLogTable(start);
-		String sql = " select type,log_time,msg ";
-		String sqlExcept = "from " + name + " where uid = ?";
-		splitPageBase(dbName, splitPage, sql, sqlExcept, new Object[]{paramValue});
+		String sql = " select uid,type,log_time,msg ";
+		String sqlExcept = "from " + name;
+		splitPageBase(dbName, splitPage, sql, sqlExcept, logTypes);
 	}
-	
 }

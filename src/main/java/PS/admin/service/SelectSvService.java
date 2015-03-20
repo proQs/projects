@@ -21,7 +21,7 @@ public class SelectSvService extends BaseService {
 		}
 		DB_Exist.set(false);
 
-		synchronized (DB_Exist) {
+		synchronized (service) {
 			if (DB_Exist.get()) {
 				return true;
 			}

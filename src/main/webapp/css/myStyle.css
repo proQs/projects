@@ -43,9 +43,17 @@ body
 	font-size: 12px;
 	background: #fff;
 	margin: 45px;
-	width: 480px;
+	width: 90%;
 	border-collapse: collapse;
 	text-align: left;
+}
+#hor-minimalist-b thead
+{
+	font-size: 14px;
+	font-weight: normal;
+	color: #039;
+	padding: 10px 8px;
+	text-align: center;
 }
 #hor-minimalist-b th
 {
